@@ -65,3 +65,5 @@ the command is unavailable on the device.
 ## 2026-10-23 extraction pass
 
 A fresh shared-storage-only pull was completed while the phone remained locked. The scanner found `beaconKey`, `irqKey`, `encryptKey`, and `token` fields in the exported logs; output was masked and the values were written only to ignored `work/mihealth/credentials.local`. No `authKey` field was found. The raw pulled logs were deleted after the scan. These fields are not assumed interchangeable: the next safe validation is a local Gadgetbridge SPP handshake using the user-authorized key, with no firmware or factory command sent.
+
+The extracted `token` value is byte-for-byte equal to the logged `encryptKey` in this export (checked locally without printing either value). Gadgetbridge's Xiaomi auth implementation expects a separate 16-byte `authkey` preference, so treating this duplicate field as the binding key would be an unverified guess and is intentionally not attempted.
