@@ -10,6 +10,16 @@ size:   8,255,867 bytes
 sha256: 360cb9c46b3df3170d44fab8216996d2f53d7c14226d254027a485cf6aecbc7f
 ```
 
+The matching full images are also available for offline comparison:
+
+```text
+3.1.175 full: 50,302,103 bytes
+sha256:       a8274e4cb29c427e020d08b7be109478750fb883498fd4bab0aad2064ef7131c
+
+3.1.190 full: 50,330,500 bytes
+sha256:       77174e6a39987ba6820796c3a20987c02fd3853fda0b85560bd5bddfad22deb4
+```
+
 The package header contains both `T1175` and `T1190` markers. That makes it a
 candidate for a normal 3.1.175 → 3.1.190 update, but it does **not** prove that
 third-party flashing is safe or that the image can be modified.
@@ -27,6 +37,12 @@ third-party flashing is safe or that the image can be modified.
 `tools/firmware_inspect.py` performs steps 1–2 only. It never patches or sends
    a firmware image to a device. Firmware files are intentionally kept out of
    Git because they are vendor copyrighted and large.
+
+Initial measurements show approximately 8.0 bits/byte entropy in both full
+images and almost every byte differs between 3.1.175 and 3.1.190. This is
+consistent with a packed or encrypted container; ordinary string replacement
+is not a viable modification method. The next useful target is the container
+header and the updater/parser in AstroBox, rather than blind binary patching.
 
 ## Flashing gate
 
