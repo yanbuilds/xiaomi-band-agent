@@ -104,8 +104,15 @@ candidate is a correctly formed container.  It does not prove the vendor
 signature policy will accept that resource change.
 
 `validate_n67cn_package.py` additionally inflates every ZIP member, checks all
-CRC values, and verifies `version.ini` reports 258 files.  Both the official
-3.1.190 image and the resource candidate pass these checks.
+CRC values, and verifies that `version.ini` reports the actual archive count.
+Both the official 3.1.190 image and the resource candidate pass these checks.
+
+The same indexer finds a 9-archive 3.1.175→3.1.190 incremental package.  It
+contains the official AP, BL2 and factory blocks plus language/NFC resources.
+The patcher permits non-`.bin` members in this incremental form, while
+requiring an explicit byte offset when a large compressed member would make a
+blind equal-length search impractical.  No incremental resource candidate is
+claimed until it passes the same full inflate/CRC checks.
 
 The OTA component embeds the vendor RSA public key as a 512-character hex
 modulus with exponent `10001`.  AP strings expose

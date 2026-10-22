@@ -18,7 +18,8 @@ import zipfile
 from pathlib import Path
 
 
-def patch(image: Path, output: Path, archive_start: int, member: str | None) -> dict:
+def patch(image: Path, output: Path, archive_start: int, member: str | None,
+          byte_offset: int | None = None) -> dict:
     original = image.read_bytes()
     if archive_start < 0 or archive_start >= len(original):
         raise ValueError("archive start is outside image")
@@ -33,8 +34,8 @@ def patch(image: Path, output: Path, archive_start: int, member: str | None) -> 
         if not items:
             raise ValueError("archive is empty")
         info = next((x for x in items if x.filename == member), items[0]) if member else items[0]
-        if info.filename.lower().endswith((".bin", ".res")):
-            raise ValueError(f"refusing firmware/resource binary entry: {info.filename}")
+        if info.filename.lower().endswith(".bin"):
+            raise ValueError(f"refusing firmware binary entry: {info.filename}")
         decoded = archive.read(info)
         central = archive.start_dir
         local = info.header_offset
@@ -44,7 +45,10 @@ def patch(image: Path, output: Path, archive_start: int, member: str | None) -> 
     comp_start = local + 30 + local_name_len + local_extra_len
     old_comp = archive_bytes[comp_start : comp_start + info.compress_size]
 
-    for index in range(min(len(decoded), 4096)):
+    offsets = [byte_offset] if byte_offset is not None else range(min(len(decoded), 4096))
+    for index in offsets:
+        if index < 0 or index >= len(decoded):
+            raise ValueError("byte offset is outside member")
         candidate = bytearray(decoded)
         candidate[index] ^= 1
         for level in range(10):
@@ -81,8 +85,10 @@ def main() -> None:
     ap.add_argument("output", type=Path)
     ap.add_argument("--archive-start", type=lambda x: int(x, 0), required=True)
     ap.add_argument("--member")
+    ap.add_argument("--byte-offset", type=int,
+                    help="exact uncompressed byte to flip; avoids a large search")
     args = ap.parse_args()
-    print(patch(args.image, args.output, args.archive_start, args.member))
+    print(patch(args.image, args.output, args.archive_start, args.member, args.byte_offset))
 
 
 if __name__ == "__main__":

@@ -17,8 +17,6 @@ def validate(path: Path) -> dict:
     data = path.read_bytes()
     archives = index(path)
     errors: list[str] = []
-    if len(archives) != 258:
-        errors.append(f"expected 258 archives, found {len(archives)}")
     version = ""
     file_num = None
     file_size = None
