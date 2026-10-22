@@ -16,3 +16,5 @@ by voltage-limited, read-only UART capture.
 The dedicated BES2700 hacking repository still lists “UART pads on Mi Band 9
 Pro” as an open issue, with no published pad map or working dump procedure:
 [atc1441 issue #4](https://github.com/atc1441/MiBand10-BES2700iMP-BEST1503-Hacking/issues/4).
+The issue remains open with no maintainer reply as checked on 2026-10-23, so it
+does not provide a usable UART route for the current unit.
