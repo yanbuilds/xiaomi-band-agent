@@ -1,0 +1,554 @@
+{
+  "image": "work\\firmware-lab\\vela_ap.bin",
+  "read_only": true,
+  "command_count": 76,
+  "commands": [
+    {
+      "name": "AT^ACC_EXAMPLE",
+      "offsets": [
+        "0x5bb0f3",
+        "0x66b42f"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^ACT",
+      "offsets": [
+        "0x66b856"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^ALARM",
+      "offsets": [
+        "0x66b61a"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^BLUETOOTH",
+      "offsets": [
+        "0x66b474"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^BLUETOOTHLE",
+      "offsets": [
+        "0x66b465"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^BSN",
+      "offsets": [
+        "0x66b4c1",
+        "0x66b4c9"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^BTMAC",
+      "offsets": [
+        "0x66b49f",
+        "0x66b4a9"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^CAL_GES_KEY",
+      "offsets": [
+        "0x66b587"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^CHARGE_DUMP",
+      "offsets": [
+        "0x66b713"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^CHARGE_STATUS",
+      "offsets": [
+        "0x66b702"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^CHARGE_SWITCH",
+      "offsets": [
+        "0x66b6f1"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^CLEAN_DIR",
+      "offsets": [
+        "0x66b519"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^CRASH",
+      "offsets": [
+        "0x66b532"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^DELETE_DIR",
+      "offsets": [
+        "0x66b403"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^DID",
+      "offsets": [
+        "0x66b481",
+        "0x66b489"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^END",
+      "offsets": [
+        "0x66b428"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^FILE_EXPORT_OVER",
+      "offsets": [
+        "0x5a9da2"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^FTYRESET",
+      "offsets": [
+        "0x66b4f6"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^GET_GES_KEY",
+      "offsets": [
+        "0x66b578"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^GET_HARDVER",
+      "offsets": [
+        "0x66b4d0"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^GET_LIGHT_CAL",
+      "offsets": [
+        "0x66b7aa"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^GET_LIGHT_ID",
+      "offsets": [
+        "0x66b7bb"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^GET_LIGHT_LUX",
+      "offsets": [
+        "0x66b784"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^GET_LIGHT_RAWDATA",
+      "offsets": [
+        "0x66b795"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^GET_PPGINFO",
+      "offsets": [
+        "0x66b847"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^GET_RTC_TIME",
+      "offsets": [
+        "0x66b732"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^HR_SET_ABH",
+      "offsets": [
+        "0x66b67f"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^HR_SET_ABL",
+      "offsets": [
+        "0x66b68d"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^HR_SET_DAILY",
+      "offsets": [
+        "0x66b6ad"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^INTERCONNECT",
+      "offsets": [
+        "0x66b5f4"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^JUMP",
+      "offsets": [
+        "0x66b4ee"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^KEY",
+      "offsets": [
+        "0x66b490",
+        "0x66b498"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^LOGZIP",
+      "offsets": [
+        "0x66b53b"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^LOW_BATTERY",
+      "offsets": [
+        "0x66b623"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^LS",
+      "offsets": [
+        "0x66b3f4"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^MCU_IIC_MODE",
+      "offsets": [
+        "0x66b550"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^MKDIR",
+      "offsets": [
+        "0x66b3fa"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^NEW_FILE",
+      "offsets": [
+        "0x66b526"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^OTA_SIL",
+      "offsets": [
+        "0x66b604"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^OTA_UPDATE",
+      "offsets": [
+        "0x66b411"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^OTA_USR",
+      "offsets": [
+        "0x66b60f"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^POWER_OFF",
+      "offsets": [
+        "0x66b502"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^PRESSURE_MEASURE",
+      "offsets": [
+        "0x66b66b"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^PSN",
+      "offsets": [
+        "0x5b8dda",
+        "0x66b4b2",
+        "0x66b4ba"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^REBOOT",
+      "offsets": [
+        "0x66b50f"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^SET_GES_KEY",
+      "offsets": [
+        "0x66b569"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_HARDVER",
+      "offsets": [
+        "0x66b4df"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_HIGH_PRESSURE",
+      "offsets": [
+        "0x66b640"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_MUSIC_INFO",
+      "offsets": [
+        "0x66b5ab"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_OXYGEN",
+      "offsets": [
+        "0x66b6bd"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_OXYGEN_LABEL",
+      "offsets": [
+        "0x66b6cb"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_PRESSURE_LABEL",
+      "offsets": [
+        "0x66b655"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_RTC_TIME",
+      "offsets": [
+        "0x66b722"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_STOPWATCH_MAX",
+      "offsets": [
+        "0x66b596"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_TRAIN_LOAD",
+      "offsets": [
+        "0x66b802"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_TRAIN_MAX_OXYGEN",
+      "offsets": [
+        "0x66b814"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_TRAIN_RECOVERY_TIME",
+      "offsets": [
+        "0x66b82c"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_VITALITY_X",
+      "offsets": [
+        "0x66b69b"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_WEATHER",
+      "offsets": [
+        "0x66b5bd"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_WEATHER_ALERT",
+      "offsets": [
+        "0x66b5df"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SET_WEATHER_TMP",
+      "offsets": [
+        "0x66b5cc"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SHOW_MM",
+      "offsets": [
+        "0x66b545"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SLEEP_REMINDER",
+      "offsets": [
+        "0x66b6df"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SPORT_COURSE",
+      "offsets": [
+        "0x66b7db"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SPORT_RECORD",
+      "offsets": [
+        "0x66b7cb"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SPORT_REMINDER_TEST",
+      "offsets": [
+        "0x66b7eb"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^START",
+      "offsets": [
+        "0x66b41f"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^SWVER",
+      "offsets": [
+        "0x66b560"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^TEMPROTECT",
+      "offsets": [
+        "0x66b632"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^THREAD_START",
+      "offsets": [
+        "0x66b43e"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^THREAD_STOP",
+      "offsets": [
+        "0x66b44e"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^UART",
+      "offsets": [
+        "0x66b45d"
+      ],
+      "risk": "high"
+    },
+    {
+      "name": "AT^VOICE_DESTORY",
+      "offsets": [
+        "0x66b750"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^VOICE_OPEN",
+      "offsets": [
+        "0x66b742"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^VOICE_OVERTIME",
+      "offsets": [
+        "0x5bbdf8",
+        "0x66b761"
+      ],
+      "risk": "unknown"
+    },
+    {
+      "name": "AT^WXPAY_BINDERR",
+      "offsets": [
+        "0x5bbe10",
+        "0x66b773"
+      ],
+      "risk": "unknown"
+    }
+  ],
+  "interpretation": [
+    "The AP contains an internal AT command vocabulary.",
+    "Static strings do not prove an external transport, parser reachability, or authorization state.",
+    "High-risk names must not be sent without a board-level backup and recovery path.",
+    "No command in this report bypasses the vendor RSA firmware signature gate."
+  ]
+}
