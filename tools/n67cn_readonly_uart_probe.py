@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Run the ATC1441 BES flasher in read-only mode and classify a dump.
+"""Prepare or run the ATC1441 BES flasher in flash-read mode.
 
-The ATC programmer is loaded into RAM by the upstream tool, but this wrapper
-never passes ``--write`` and caps the default read at 1 MiB.  It is intended
-for identifying the n67cn boot/flash layout before any custom image is built.
+The upstream programmer is loaded into RAM, so this is not electrically
+passive even though it never writes non-volatile flash.  The default is a
+dry-run; ``--execute-read-only`` is required to send bytes.  The wrapper never
+passes ``--write`` and caps the default read at 1 MiB.
 """
 from __future__ import annotations
 
@@ -39,6 +40,8 @@ def main() -> int:
     ap.add_argument("--size", default="0x100000",
                     help="maximum default read is 1 MiB")
     ap.add_argument("--report", type=Path)
+    ap.add_argument("--execute-read-only", action="store_true",
+                    help="actually send the upstream read-only probe; omitted means dry-run")
     args = ap.parse_args()
     size = int(args.size, 0)
     if size <= 0 or size > 0x100000:
@@ -52,6 +55,9 @@ def main() -> int:
            "--output", str(args.output), "--no-log"]
     print("read-only UART probe:", " ".join(cmd))
     print("This wrapper never sends the upstream --write option.")
+    if not args.execute_read_only:
+        print("dry-run: no UART bytes were sent; pass --execute-read-only to proceed")
+        return 0
     result = subprocess.run(cmd, check=False)
     if result.returncode != 0:
         return result.returncode

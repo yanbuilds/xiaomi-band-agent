@@ -17,12 +17,26 @@
 4. 搜索 `NuttShell`、`NSH`、`bl2>`、`SecureBoot`、`sign verify` 等只读 banner。
 5. 将原始捕获保存到本地 `work/uart/`，提交前只保留脱敏后的 baud、时间戳和 banner 摘要。
 
-仓库已有的监听器会拒绝写入模式：
+仓库已有的监听器会拒绝写入模式。`n67cn_readonly_uart_probe.py` 还会默认
+dry-run；因为上游探针会把 SecondStage 程序加载到 RAM，只有明确理解这点并
+确认使用独立测试板时，才可添加 `--execute-read-only`。这不是被动监听：
+它会发送同步/加载字节，但仍不传递 `--write`、不擦除非易失存储。
 
 ```powershell
 python tools/n67cn_uart_listen.py --port COM7 --baud 115200 --seconds 30 `
   --output work/uart/bl2-115200.log
 ```
+
+对上游 BES 读模式的预演：
+
+```powershell
+python tools/n67cn_readonly_uart_probe.py --port COM7 `
+  --flasher work/atc-bes-hacking/bes2700impForDisplayRe/flasher/bes2700_flasher.py `
+  --output work/uart/n67cn-read.bin
+```
+
+上面命令只打印命令，不发送 UART；只有在专用测试板和恢复方案就绪后，才
+显式增加 `--execute-read-only`。
 
 只有在捕获到明确的 BL2 提示符、完成整片只读备份并准备好恢复路径后，才有理由研究命令协议。AP 的 `AT^...` 字符串不能替代这个条件；它们不在 BL2 或 OTA loader 中。
 
