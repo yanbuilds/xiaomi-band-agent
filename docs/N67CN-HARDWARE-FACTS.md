@@ -39,3 +39,9 @@ The current candidate OTA package remains the correct low-risk format
 experiment.  A true raw custom image needs a Pro NAND dump and a NAND-aware
 recovery writer; we must not reinterpret the 50-MB OTA file as a 4-MB raw
 image.
+
+Once a read-only dump is available, run
+`tools/analyze_gd5f2gm7_dump.py dump.bin --oob 64`.  It reports complete pages,
+128-KiB erase blocks, and candidate bad-block markers without modifying the
+device.  The marker result is deliberately labelled a candidate until it is
+cross-checked against the n67cn `bes_nand_isbad` implementation.
