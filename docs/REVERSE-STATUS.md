@@ -33,6 +33,14 @@ firmware at AP offset `0x5b99e7`.  Its SHA-256 fingerprint is
 This is strong evidence that AP/boot updates are verified with a vendor key.
 No private signing key is present in the public archives.
 
+The OTA-related code has explicit `app_verify` strings for reading a ZIP
+central-directory offset and a `signature_block`, hashing the signed bytes,
+then calling `mbedtls_pk_verify`/`verify_block_signature`.  That is a real
+verification path, rather than a guessed CRC-only check.  The public key is
+also present in the OTA code's read-only data.  This is why the resource-only
+repack is useful as a format experiment but cannot yet be called an unlocked
+firmware image.
+
 ## Reproducible extraction
 
 ```powershell
