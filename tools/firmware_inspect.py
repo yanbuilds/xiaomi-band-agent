@@ -16,7 +16,7 @@ from pathlib import Path
 
 
 ASCII_RE = re.compile(rb"[ -~]{4,}")
-VERSION_RE = re.compile(rb"(?:v|T)(\d+(?:\.\d+){2,4})")
+VERSION_RE = re.compile(rb"(?:v(\d+(?:\.\d+){2,4})|T(\d{4}))")
 
 
 def inspect(path: Path) -> dict:
@@ -28,7 +28,9 @@ def inspect(path: Path) -> dict:
 
     markers = sorted(
         {
-            match.group(1).decode("ascii", "replace")
+            next(group for group in match.groups() if group is not None).decode(
+                "ascii", "replace"
+            )
             for match in VERSION_RE.finditer(data[:2 * 1024 * 1024])
         }
     )
