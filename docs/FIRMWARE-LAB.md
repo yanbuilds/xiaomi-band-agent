@@ -76,6 +76,11 @@ These strings alone do not reveal the vendor private key, but they strongly
 support the conclusion that the updater verifies a signed package rather than
 only checking a filename or CRC.
 
+`tools/extract_firmware_public_key.py` extracts the embedded 2048-bit RSA
+public key. The key uses exponent `0x10001`; the corresponding private key is
+not present in the image. This lets us verify signatures when a signed sample
+is available, but it does not let us create a new vendor-signed package.
+
 Both full images and the 3.1.175→3.1.190 incremental image contain the
 `ENDSLEY/BSDIFF50` implementation strings. The incremental package therefore
 contains a BSDIFF-style patch path in addition to the outer vendor container;
