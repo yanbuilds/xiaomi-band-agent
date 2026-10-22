@@ -88,6 +88,17 @@ target version = 3.1.190
 
 ## 离线基线
 
+可以用总审计工具在发送前强制检查外层 RSA 签名：
+
+```powershell
+python tools/flashability_audit.py <candidate.bin> \
+  --public-key work/firmware-lab/n67cn_public.pem
+```
+
+只有输出 `flashable: true` 才表示候选满足本地签名门；输出
+`flashable: false` 的候选即使 ZIP/CRC 正确，也必须禁止写入设备。该工具
+始终标记 `device_write_attempted: false`，不会连接、重启或发送任何数据。
+
 完整镜像资源实验版也保存在实验目录中：
 
 ```text
