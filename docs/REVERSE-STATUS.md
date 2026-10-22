@@ -103,6 +103,14 @@ shows 258 valid archives and exactly one changed archive, which proves that the
 candidate is a correctly formed container.  It does not prove the vendor
 signature policy will accept that resource change.
 
+The OTA component embeds the vendor RSA public key as a 512-character hex
+modulus with exponent `10001`.  AP strings expose
+`app_verify_info`, `central_directory_offset`, `signature_block`, and
+`mbedtls_pk_verify`.  This confirms a signed application-block path exists, but
+the public archives contain no private signing key.  The resource experiment
+therefore remains the highest-confidence package-format test, not an unlocked
+firmware image.
+
 ## Consequence for a flashable custom image
 
 We can now edit and rebuild resources locally, and we can inspect AP/boot
