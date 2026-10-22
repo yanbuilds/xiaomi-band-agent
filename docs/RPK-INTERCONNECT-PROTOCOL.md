@@ -39,3 +39,11 @@ building is independent of a user-owned signing key; no private key was
 created, copied, or committed. A production RPK would require a certificate
 chosen by the Xiaomi tooling/device ecosystem, which is separate from the
 vendor RSA key used for AP/BL firmware.
+
+A disposable local RSA-2048 certificate was generated only under the ignored
+`band-app/sign/release/` directory and deleted immediately after the test. With
+that certificate, `npm run release` completed and produced a 9,173-byte RPK;
+`META-INF/CERT` was still a nested zip containing only `hash.json` (2,329 bytes).
+No private key remains in the workspace. This confirms the toolkit's RPK
+certificate output is independent of the Band firmware's outer RSA signature;
+it cannot be reused to sign `vela_ap.bin` or any `.bin` firmware image.
