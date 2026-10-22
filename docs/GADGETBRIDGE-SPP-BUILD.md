@@ -11,3 +11,14 @@ Built locally on 2026-10-23 from the `xiaomi-app-messaging` worktree after chang
 This is a debug APK for protocol testing. It is not a firmware image and cannot be flashed to the band. Installation and device pairing are intentionally left as a separate, user-visible step. The APK does not contain the Mi Fitness account credentials or the user's auth key; Gadgetbridge reads an auth key only from its own per-device preferences.
 
 The coordinator change is recorded in `patches/gadgetbridge-n67cn-spp.patch`.
+
+For a guarded installation after visibly unlocking the phone, use:
+
+```powershell
+./tools/install_gadgetbridge_safe.ps1
+./tools/install_gadgetbridge_safe.ps1 -Install
+```
+
+The first command is a dry-run. The script checks the pinned APK SHA-256,
+requires a single ready ADB device, rejects the lock screen, and never clears
+application data.
