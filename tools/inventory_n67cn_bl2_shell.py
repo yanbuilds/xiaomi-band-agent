@@ -16,6 +16,7 @@ from pathlib import Path
 DEFAULT_KEYS = (
     "bl2>", "/dev/console", "/dev/bes_flash", "flash_bl", "flash_bl2",
     "flash_ap", "flash_config", "bes_reserved", "DRVUSB", "ESHELL",
+    "/dev/ttyS0", "/dev/ttyS1",
     "SecureBoot Status", "sign verify", "ota", "reboot", "resetcause",
     "dd", "boardctl", "bootloader", "recovery", "factory",
 )

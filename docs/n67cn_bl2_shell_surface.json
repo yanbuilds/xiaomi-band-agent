@@ -57,6 +57,14 @@
       "text": "total"
     },
     {
+      "offset": "0x405d0",
+      "text": "/dev/ttyS0"
+    },
+    {
+      "offset": "0x405db",
+      "text": "/dev/ttyS1"
+    },
+    {
       "offset": "0x40842",
       "text": "/dev/bes_flash"
     },
