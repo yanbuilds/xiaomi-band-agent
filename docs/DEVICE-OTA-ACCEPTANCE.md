@@ -132,3 +132,12 @@ The full-set incremental candidate was run through OTA preflight from the
 current 3.1.175 version. Container, MD5, SHA-256, and version ordering all pass,
 but RSA verification fails (`ValueError`), so `send_allowed_by_preflight=false`.
 The safety gate therefore refuses the candidate before any device write.
+
+## 2026-10-23 离线复核
+
+重新运行 `tools/validate_n67cn_hardware.py` 后，官方 AP 中的 NAND 证据仍完整：
+`gd5f2gm7` 型号、读/写页、擦除块和容量查询标记均存在。对官方
+`3.1.190_from_3.1.175` 增量包重新执行 `tools/ota_preflight.py`，结果为：
+容器有效、版本从 `3.1.175` 升到 `3.1.190`、外层 RSA 签名验证通过，
+`send_allowed_by_preflight=true`。这只证明官方增量包满足本地安全门；本轮没有
+向手机或手环发送 OTA 数据。
