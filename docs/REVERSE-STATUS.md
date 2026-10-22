@@ -33,6 +33,27 @@ firmware at AP offset `0x5b99e7`.  Its SHA-256 fingerprint is
 This is strong evidence that AP/boot updates are verified with a vendor key.
 No private signing key is present in the public archives.
 
+### BEST1503/UART compatibility signals
+
+The current ATC1441 tree contains a separate `bes2700impForDisplayRe` base for
+the ordinary Mi Band 9 and a UART programmer described as captured from a real
+Mi Band 9.  Its programmer uses BESLink at 921600 baud and a 4 MiB flash window.
+The extracted n67cn Pro `vela_bl.bin`, `vela_bl2.bin`, `vela_ap.bin`, and
+`vela_factory.bin` all start with the same 14-byte Vela component header shape
+(`ff ff ff ff 00 00 05 00 ...`) and the AP contains the model string
+`miwear.watch.n67cn` plus 336-wide UI resource names.  These are useful static
+signals that the Pro image belongs to the same Vela/BEST1503 family, but they
+do not prove that the ordinary Band 9 pinout, programmer payload, memory map,
+or screen driver can be used on the Pro.  The generated comparison report is
+`work/firmware-lab/best1503-compare-current.json` and the read-only comparator
+is `tools/compare_best1503_layout.py`.
+
+The next hardware-dependent step is therefore a UART **read-only** probe: use
+the ATC programmer only to identify the ROM advertisement and read a small
+flash range, then compare the returned boot header and flash ID with the
+n67cn components.  No write command should be sent until a complete backup and
+a recovery path have been verified.
+
 The OTA-related code has explicit `app_verify` strings for reading a ZIP
 central-directory offset and a `signature_block`, hashing the signed bytes,
 then calling `mbedtls_pk_verify`/`verify_block_signature`.  That is a real
