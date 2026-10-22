@@ -51,3 +51,7 @@ Band 10 上验证。对我们的 `n67cn` 样本，已验证相同 Vela 启动头
 测试点。该项目还提醒不要把 RPK 的 `CERT`/`hash.json` 当作固件签名。这个交叉
 证据支持继续完善 RPK + Android 中转，而不把未验证的 BEST1503 flasher 直接用于
 `n67cn` 主板。
+
+截至 2026-10-23，ATC 项目的公开 issue「UART pads on Mi Band 9 Pro」仍处于
+Open 状态，没有维护者回复、附件、分支或可复现的 n67cn 测试点记录。因此该 issue
+仍不能作为刷写依据；仓库中的示意 Pinout 不能直接套用到本手环。
