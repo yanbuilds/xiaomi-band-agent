@@ -81,6 +81,13 @@ public key. The key uses exponent `0x10001`; the corresponding private key is
 not present in the image. This lets us verify signatures when a signed sample
 is available, but it does not let us create a new vendor-signed package.
 
+The modulus fingerprint is identical across the 3.1.175 full image, the
+3.1.190 full image, and the matching 3.1.190-from-3.1.175 incremental image:
+
+```text
+f4ffe419c16bc3554f7e2172021e6493aa6c2fc05580cd4fd820eac4a7fcc8a9
+```
+
 Both full images and the 3.1.175→3.1.190 incremental image contain the
 `ENDSLEY/BSDIFF50` implementation strings. The incremental package therefore
 contains a BSDIFF-style patch path in addition to the outer vendor container;
