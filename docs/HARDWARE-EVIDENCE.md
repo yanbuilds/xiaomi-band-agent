@@ -12,3 +12,7 @@ This supports the firmware lab's BES2700/n67cn identification, but it is not
 enough evidence to probe arbitrary pads. The current safe hardware gate remains
 a board photograph with pad labels or an established community pinout, followed
 by voltage-limited, read-only UART capture.
+
+The dedicated BES2700 hacking repository still lists “UART pads on Mi Band 9
+Pro” as an open issue, with no published pad map or working dump procedure:
+[atc1441 issue #4](https://github.com/atc1441/MiBand10-BES2700iMP-BEST1503-Hacking/issues/4).
