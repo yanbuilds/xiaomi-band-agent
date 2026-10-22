@@ -103,6 +103,10 @@ shows 258 valid archives and exactly one changed archive, which proves that the
 candidate is a correctly formed container.  It does not prove the vendor
 signature policy will accept that resource change.
 
+`validate_n67cn_package.py` additionally inflates every ZIP member, checks all
+CRC values, and verifies `version.ini` reports 258 files.  Both the official
+3.1.190 image and the resource candidate pass these checks.
+
 The OTA component embeds the vendor RSA public key as a 512-character hex
 modulus with exponent `10001`.  AP strings expose
 `app_verify_info`, `central_directory_offset`, `signature_block`, and
