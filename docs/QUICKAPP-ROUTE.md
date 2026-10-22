@@ -15,6 +15,12 @@ debug package at `outputs/band9pro-mvp/band-agent-debug.rpk`.  It receives a
 JSON question from Android, vibrates, renders up to three choices, sends the
 selected option back through interconnect, and shows the Android `ack`.
 
+The current generated artifact is 12,517 bytes with SHA-256
+`157296d9b97564c9ff8a6a9ece3274f2fe8184832c7c0535c6e2b85e34bc6491`.
+`tools/validate_rpk.py` reports `valid: true`, with `META-INF/CERT` verified as
+a file-hash manifest. This is a package-integrity check; it is not evidence
+that the n67cn bootloader would accept an AP/OTA image.
+
 ## Build
 
 ```powershell
