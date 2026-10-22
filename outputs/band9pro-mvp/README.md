@@ -31,6 +31,11 @@ AstroBox 发送前的 MiWear mass envelope 可用
 其中版本为 `3.1.190`、MD5 与文件绑定，便于在 Android/Gadgetbridge 日志中核对
 实际发送对象。
 
+另有与当前设备版本匹配的 3.1.175 资源候选：
+[`n67cn-v3.1.175-resource-experiment.bin`](n67cn-v3.1.175-resource-experiment.bin)。
+它适合做结构对照；由于设备已经运行 3.1.175，实际 OTA 测试优先使用官方
+3.1.190 升级路径对应的候选，避免同版本升级被设备策略拒绝。
+
 ## 先确认型号与连接方式
 
 核对源码：Gadgetbridge GitHub 镜像提交 a0948ee1cbc2a870f91d313f8e37df5f524465f7；
