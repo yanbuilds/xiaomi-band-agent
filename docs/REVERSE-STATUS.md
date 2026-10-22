@@ -99,6 +99,22 @@ and `verify ok` at `0x803e0`.  The updater also contains the explicit
 These offsets are static evidence for the verification path; they are not a
 signature bypass or a writable bootloader entry point.
 
+### OpenVela comparison
+
+OpenVela's public `frameworks_system_ota/verify/zip_verify.c` implements an
+APK Signing Block 42 verifier backed by `/etc/key.avb`, while its
+`gen_ota_zip.py` signs the generated OTA ZIP with an APK signing key.  A scan
+of the official n67cn 3.1.190 image finds no `APK Sig Block 42`, `AVB0`,
+`AVBf`, `vbmeta`, or `/etc/key.avb` marker in the outer image.  The last ZIP
+archive has a 268-byte non-ZIP tail ending in `5a 5a 7e`; this is recorded in
+`docs/n67cn_3.1.190_signature_surface.json` by
+`tools/inspect_n67cn_signature_surface.py`.
+
+The result narrows the implementation target: n67cn is not directly using
+the public OpenVela APK-signing container at the outer level.  The tail and
+the `vela_ota` verifier still need a device/log or deeper disassembly to map;
+absence of a public marker is not evidence that it is unsigned.
+
 ## Reproducible extraction
 
 The outer image is not a ZIP by itself.  Its 92-byte header gives the exact

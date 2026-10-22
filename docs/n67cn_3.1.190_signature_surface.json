@@ -1,0 +1,21 @@
+{
+  "path": "work\\firmware-lab\\n67cn_v3.1.190_full.bin",
+  "size": 50330500,
+  "sha256": "77174e6a39987ba6820796c3a20987c02fd3853fda0b85560bd5bddfad22deb4",
+  "outer_magic": "605a5a7e",
+  "outer_version": "3.1.190",
+  "outer_mode": 0,
+  "last_eocd_offset": 50330210,
+  "last_archive_end": 50330232,
+  "last_archive_tail_length": 268,
+  "last_archive_tail_prefix": "b3c4f761fa57465f06321c8574bee037",
+  "last_archive_tail_suffix": "97cb47a26c7df73464278ee0805a5a7e",
+  "standard_markers": {
+    "APK Sig Block 42": false,
+    "AVB0": false,
+    "AVBf": false,
+    "vbmeta": false,
+    "/etc/key.avb": false
+  },
+  "interpretation": "The standard OpenVela APK Sig Block markers are absent from this n67cn outer image; n67cn uses its Vela-specific updater surface. This is a format observation, not proof that the tail is unsigned."
+}
