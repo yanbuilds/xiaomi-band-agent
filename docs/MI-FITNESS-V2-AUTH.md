@@ -24,6 +24,12 @@ The observed sequence is:
 8. Send command type `1`, subtype `27`, then wait for the device capability and
    confirmation response.
 
+Gadgetbridge's checked-in `xiaomi.proto` matches the envelope used here:
+`Command.type=1`, `Command.subtype=26/27`, `Auth.phoneNonce` field 30,
+`Auth.watchNonce` field 31, and `Auth.authStep3` field 32. Its `AuthDeviceInfo`
+also preserves the required proto2 defaults (`unknown1=0`, `unknown3=224`),
+which is why the existing `XiaomiAuthService` can be reused for SPP.
+
 `tools/xiaomi_wear_auth_v2.py` contains the reusable byte-level derivation,
 signature, verification, and AES-CCM helpers. It deliberately does not read,
 persist, or print an auth key. The remaining work for an independent client is
