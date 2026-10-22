@@ -361,3 +361,15 @@ an RSA firmware signature. The same work documents the
 message channel. This makes the RPK route a device-tested control path for the
 Grok interaction, while the modified firmware candidate remains unverified.
 Source: https://github.com/Sany18/smart-band
+
+## Boot-mode string audit (read-only)
+
+The extracted n67cn 3.1.190 `vela_ota` and AP images contain diagnostic
+strings for `sw_bootmode`, `hw_bootmode`, `arm_debugmonitor`, `/dev/bes_flash`,
+`DRVUSB`, and `SecureBoot Status`. These show that the firmware knows about
+boot-mode and debug/flash subsystems, but they are not an exposed host
+protocol or a proof of an unlocked path. The same scan found no public
+SecondStage/UART command table or n67cn test-pad mapping. We therefore do not
+turn these strings into a flashing procedure without a physical board capture:
+the next evidence required is a powered-off board photo and a read-only UART
+probe on confirmed test pads.
