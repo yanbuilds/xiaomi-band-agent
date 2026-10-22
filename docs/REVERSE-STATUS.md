@@ -73,3 +73,20 @@ an unlocked recovery/bootloader path.  The next experiment is therefore a
 read-only signature-path trace and a protocol-level notification proof of
 concept.  Do not flash a locally modified image until the device accepts its
 signature and the updater reports a verified result.
+# Related BEST1503 research
+
+`atc1441/MiBand10-BES2700iMP-BEST1503-Hacking` is directly relevant to the
+hardware layer: its README identifies the Band 9/10 application processor as
+BES2700iMP/BEST1503, reconstructs the display/touch HAL, and documents a UART
+SecondStage flashing flow. The author states that the SDK was tested on Band
+10 and is expected to apply to Band 9; that is useful evidence, not proof for
+the China Band 9 Pro (`n67cn`) board, pinout, bootloader policy, or 3.1.175
+image. It also replaces stock firmware, unlike our RPK route.
+
+We therefore use it for chip-family and flasher research while keeping the
+Band 9 Pro path staged: back up flash, identify the exact board test pads and
+bootloader handshake, then validate a minimal recovery image on sacrificial
+hardware before attempting any custom firmware. For the Grok interaction goal,
+the signed Quick App/RPK path remains the lower-risk deliverable because it
+already exercises the CN Band 9 Pro interconnect and vibration APIs.
+
