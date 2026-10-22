@@ -15,3 +15,8 @@ band-app/build/
 band-app/dist/
 band-app/.temp/
 
+# Never commit locally generated firmware candidates or mass-transfer blobs.
+# They may contain proprietary firmware data and are not flashable artifacts.
+outputs/band9pro-mvp/*.bin
+outputs/band9pro-mvp/*.mass
+outputs/band9pro-mvp/*.ota.json
