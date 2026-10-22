@@ -30,3 +30,15 @@ python tools/inventory_n67cn_bl2_shell.py work/firmware-lab/carved190/vela_bl2.b
 
 The generated JSON records offsets so later disassembly or a UART capture can
 be correlated without modifying the firmware.
+
+When a suspected pad and a 3.3-V-safe USB-UART adapter are available, the
+passive listener can capture a boot log without transmitting anything:
+
+```text
+python tools/n67cn_uart_listen.py --port COM7 --baud 115200 --seconds 15 --output work/uart/bl2.log
+```
+
+Try only the documented candidate UART device names as a hypothesis; the
+firmware does not establish a physical pinout or baud rate.  Do not connect a
+5-V adapter and do not use the existing ATC ordinary-band flasher on this
+Pro NAND path.
