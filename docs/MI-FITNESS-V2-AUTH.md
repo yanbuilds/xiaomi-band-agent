@@ -43,6 +43,11 @@ from its authenticated binding service; it is not present in the public
 shared-storage logs. That is why a non-root ADB extraction cannot safely
 recover it.
 
+The SPP wrapper then constructs `txt`, a `WearAuthV2` instance with
+`appDeviceId` as the binding identifier and a null OOB extra. Therefore the
+Band 9 Pro SPP path uses the no-OOB form of the signature message; the OOB
+variant belongs to the Wi-Fi path.
+
 This extraction explains why the direct BLE probe's earlier status-4 response
 was inconclusive: the official app first uses a bound-device identifier and
 application verification exchange, while the probe only exercised the generic
