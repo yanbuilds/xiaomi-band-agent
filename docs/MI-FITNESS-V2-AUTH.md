@@ -36,6 +36,13 @@ persist, or print an auth key. The remaining work for an independent client is
 the proprietary protobuf envelope and the SPP command dispatcher, which are
 already represented by Gadgetbridge's Xiaomi protobuf and SPP V2 classes.
 
+The APK's `SppConnection` confirms that the 16-byte device secret is supplied
+as `DeviceInfo.token` (converted to bytes) together with `userId` and
+`appDeviceId`. This token is held in Mi Fitness private storage or obtained
+from its authenticated binding service; it is not present in the public
+shared-storage logs. That is why a non-root ADB extraction cannot safely
+recover it.
+
 This extraction explains why the direct BLE probe's earlier status-4 response
 was inconclusive: the official app first uses a bound-device identifier and
 application verification exchange, while the probe only exercised the generic
