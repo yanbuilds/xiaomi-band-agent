@@ -31,3 +31,12 @@ Status 4 must be resolved before testing encrypted commands. The likely causes
 are a still-owned Mi Fitness binding or a model-specific BLE authentication
 variant. We should first release the official-app connection/binding and retry,
 then compare the exact auth protobuf with Xiaomi's Android implementation.
+
+## 2026-10-23 credential-material retry
+
+The latest shared Mi Fitness log contains 16-byte `encryptKey` and
+`beaconKey` fields, while its `authKey` field is null. A fresh probe using the
+latest local `encryptKey` again reached session setup but returned status 4
+before a watch nonce. No encrypted command, vibration, health read, or file
+confirmation was sent. This rules out treating the logged `encryptKey` as a
+standalone replacement for the SPP binding token.
