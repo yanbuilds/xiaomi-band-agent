@@ -34,3 +34,5 @@ pending protocol evidence.
 
 The third-party checkout is kept under ignored `work/` for read-only analysis;
 no source, device identifier, auth key, or raw log is copied into this repo.
+The locally reviewed snapshot is pinned at commit
+`3ecfd2444d37e0f888c8ed42da86a56733acd55a` for reproducibility.
