@@ -221,6 +221,14 @@ the version-aware preflight from a 3.1.175 baseline. It is a better controlled
 OTA experiment than sending the 50 MB full image, but it still has no device
 acceptance result and must not be flashed without a recovery plan.
 
+AstroBox's host-side detector rejects firmware files below 1,000,000 bytes.
+`tools/append_incremental_archive.py` therefore also produces a 8,270,038-byte
+variant that preserves all nine official incremental archives and appends the
+patched font archive. It passes the same mode-2, ZIP/CRC, and version preflight
+checks and is the candidate intended for an AstroBox/Gadgetbridge transport
+experiment. The additional official archives are byte-identical; this does not
+change the unresolved device-side signature question.
+
 ## New Band 9 Pro evidence from Sany18/smart-band
 
 The public Band 9 Pro notes provide two important checks against this path:
