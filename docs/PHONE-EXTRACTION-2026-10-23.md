@@ -33,3 +33,10 @@ For a user-authorized, shared-storage-only copy of the logs, use
 `tools/pull_mifitness_logs_safe.ps1`. It defaults to a dry-run and writes only
 to ignored `work/` when `-Pull` is supplied; it never reads `/data/user/0`,
 prints credentials, or modifies the phone.
+
+The current log set contains repeated 32-hex-character `encryptKey` and
+`beaconKey` fields (16 bytes each). They were copied into the local-only,
+ignored `work/mihealth/credentials.local` file with their values redacted from
+all output. The same records report `authKey: null`, so these fields are
+device-side material and must not be treated as the SPP binding token without
+an authenticated protocol test.
