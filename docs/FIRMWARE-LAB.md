@@ -104,6 +104,12 @@ python tools/firmware_container.py work/firmware-lab/n67cn_v3.1.190_full.bin \
 only performs a byte-identical copy and refuses any mismatch; this prevents a
 resource patch experiment from being mistaken for a valid flashable package.
 
+`tools/patch_resource_experiment.py` can create a size-preserving modified copy
+of a non-firmware ZIP resource. It is intentionally an offline experiment:
+it updates ZIP CRC fields but does not and cannot update the vendor firmware
+signature. The output must never be sent to a device without a verified
+signature and recovery path.
+
 ## Flashing gate
 
 Before any write operation we need a verified device backup, the exact model
