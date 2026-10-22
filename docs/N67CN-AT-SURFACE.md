@@ -13,6 +13,11 @@ confirms that notification and vibration behavior is implemented in the AP
 image; it does not expose a new host command or make those functions safe to
 call directly.
 
+A component-level scan found 85 `AT^` occurrences in `vela_ap.bin`, but zero
+in the extracted `vela_bl2.bin` and `vela_ota` components. The AT vocabulary is
+therefore an AP-side factory/diagnostic surface, not a bootloader command
+table. It cannot by itself bypass the BL2/OTA signature gate.
+
 This is useful evidence for locating the factory command dispatcher during
 future disassembly. It is not an unlocked interface: a string table does not
 show which transport reaches the parser, whether a session is authenticated,
