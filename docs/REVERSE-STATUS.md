@@ -130,6 +130,11 @@ length, outer mode and SHA-256 in a reviewable JSON file.  For the current full
 candidate it emits version `3.1.190` and MD5
 `b86b1ca6f21c7b6e6aa839e1413bf0da`.
 
+`ota_preflight.py` adds the device's current version to this check.  Against a
+3.1.175 device it permits the 3.1.190 candidate and refuses the same-version
+3.1.175 resource candidate.  This is a local guard only; it does not connect or
+claim that the device's signature verifier will accept the image.
+
 The same indexer finds a 9-archive 3.1.175→3.1.190 incremental package.  It
 contains the official AP, BL2 and factory blocks plus language/NFC resources.
 The patcher permits non-`.bin` members in this incremental form, while
