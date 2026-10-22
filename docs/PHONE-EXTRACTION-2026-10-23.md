@@ -40,3 +40,8 @@ ignored `work/mihealth/credentials.local` file with their values redacted from
 all output. The same records report `authKey: null`, so these fields are
 device-side material and must not be treated as the SPP binding token without
 an authenticated protocol test.
+
+The phone also contained two `Download/wearablelog/*.zip` migration archives.
+Their Mi Fitness main logs likewise had `authKey: null`; the local raw ZIPs were
+deleted immediately after inspection because they contained account/session
+log material. The archives on the phone were not modified.
