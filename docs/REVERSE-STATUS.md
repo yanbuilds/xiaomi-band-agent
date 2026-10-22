@@ -108,3 +108,17 @@ cross-check for crypto/frame vectors and as the reference for activity-file
 parsing; the Android Bluetooth owner remains the Sany18/Gadgetbridge Xiaomi
 service. Source: [FreeBand](https://github.com/cobanov/freeband).
 
+
+# n67cn package experiment
+
+The local `n67cn_v3.1.190_font-test2.bin` experiment is size-preserving and
+keeps the 92-byte outer Vela header byte-identical. `validate_custom_firmware.py`
+reports only three changed ranges: the compressed resource byte and the local
+and central ZIP CRC32 fields. The candidate therefore passes offline structural
+checks and can be supplied to an OTA client as a normal full-image file.
+
+This is not yet a verified flashable custom firmware: the device-side verifier,
+component policy, and recovery behavior have not been tested on a physical
+`n67cn` unit. It is the correct artifact for the next controlled test because
+it changes one non-code resource while leaving bootloader, AP, factory image,
+outer metadata, and file length unchanged.
