@@ -43,6 +43,23 @@ firmware image.
 
 ## Reproducible extraction
 
+The outer image is not a ZIP by itself.  Its 92-byte header gives the exact
+end of the first `vela_ota.bin` component.  `extract_n67cn_outer.py` reads that
+offset and writes the complete component, including its final trailer bytes:
+
+```powershell
+python tools/extract_n67cn_outer.py `
+  work/firmware-lab/n67cn_v3.1.190_full.bin `
+  --component work/firmware-lab/vela_ota_exact.bin `
+  --manifest work/firmware-lab/vela_ota_exact.json
+```
+
+For 3.1.190 and 3.1.175 the component is 575,816 bytes and starts with the
+same Vela image header.  The versions differ in their trailer digest/metadata;
+therefore the component must be extracted from the matching full image rather
+than copied between releases.  This is a read-only container operation and does
+not alter the image or produce a flashable package.
+
 ```powershell
 python tools/carve_firmware_components.py `
   work/firmware-lab/n67cn_v3.1.190_full.bin `
