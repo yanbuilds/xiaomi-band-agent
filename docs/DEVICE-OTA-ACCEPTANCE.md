@@ -84,3 +84,16 @@ sha256 = 6941be39567efba5f7a123f58ea21b9e2b35ad95b30bf0870df2d0246663a63b
 `MiSansF-Demibold.ttf`，归档大小仍为 14,167 字节，CRC 从
 `61f7c4b3` 变为 `9b07acd4`。`tools/validate_resource_candidate.py` 已报告
 `errors: []`。这证明了可重复的资源级修改基线，但不证明设备会接受厂商签名。
+
+增量候选也已从官方增量基线重新构建并得到相同 SHA-256：
+
+```powershell
+python tools/append_incremental_archive.py `
+  work/firmware-lab/n67cn_v3.1.190_from_v3.1.175.bin `
+  work/firmware-lab/n67cn_v3.1.190_font-rebuilt.bin `
+  --source-start 0x2ffc321 `
+  --output work/firmware-lab/rebuilt-fullset.bin
+```
+
+重建结果与 `outputs/band9pro-mvp/n67cn-v3.1.190-font-incremental-fullset.bin`
+均为 `6831f9951c1ab184a43eb39b5fe2af9dacbc983462848a8253037aae11adf6fd`。
