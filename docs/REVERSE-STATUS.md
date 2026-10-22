@@ -393,3 +393,14 @@ useful for control-flow comparison but does not establish a bypass for n67cn.
 
 The extracted scripts and the absence of an unprotected recovery command are
 now recorded as evidence; no modified BL2 is emitted for device use.
+
+## BL2 flash API audit (read-only)
+
+A string-only scan of the extracted `vela_bl2.bin` also finds internal
+`/dev/bes_flash`, `flash_bl`, `flash_bl2`, `flash_ap`, `flash_config`, UART HAL,
+and NOR/NAND erase/write routines. These are compiled-in services used by the
+OTA state machine; no host command names, unlock token, or public UART command
+dispatcher was found alongside them. Their presence therefore does not
+justify sending raw writes or producing a modified bootloader. A physical
+test-pad capture and a reversible read-only UART transcript remain required
+before any write-path experiment.
