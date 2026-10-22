@@ -12,6 +12,10 @@
 尚未实现 Android 上传 Worker、配置界面、持久化 outbox 和 Agent 模型调用。
 Grok bot 通过下面的通用 API 接入，无须把蓝牙密钥交给模型。
 
+外部项目的职责划分见 [`docs/RESEARCH-TRIAGE.md`](../../docs/RESEARCH-TRIAGE.md)：
+`miband-mcp` 适合作为 Agent/SQLite 同步层参考，BEST1503 SDK 适合作为固件刷写
+研究底座，Gadgetbridge 仍是 Android 蓝牙和 Xiaomi protobuf 的底座。
+
 ## 先确认型号与连接方式
 
 核对源码：Gadgetbridge GitHub 镜像提交 a0948ee1cbc2a870f91d313f8e37df5f524465f7；
