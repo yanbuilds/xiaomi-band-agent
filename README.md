@@ -31,3 +31,4 @@ Android 集成仍需放入 Gadgetbridge fork 编译；Python 原型不负责直�
 ## 许可与研究材料
 
 Gadgetbridge 代码按 AGPL-3.0-or-later 处理，FreeBand 按 MIT 处理。仓库只保存我们的代码、协议说明和脱敏测试向量；个人 auth key、厂商账号数据和未授权厂商固件不进入 Git。
+docs/REVERSE-STATUS.md records the validated firmware component extraction and signing barrier.
