@@ -55,3 +55,9 @@ contains OTA, verification, and authentication markers, while
 markers. These markers show that the official app records an OTA/authentication
 path, but they do not expose a vendor signature, an unlock token, or an
 accepted custom image. Raw log copies were removed after the count-only audit.
+
+A second count-only pass found no `FactoryTest`, `userdebug`/`eng` transition,
+or OTA channel-6 marker in the shared logs. It did find ordinary `bootmode`
+and signature-related text, which is too generic to establish that the factory
+command was executed. This is negative evidence only; it does not prove that
+the command is unavailable on the device.
