@@ -209,3 +209,14 @@ component policy, and recovery behavior have not been tested on a physical
 `n67cn` unit. It is the correct artifact for the next controlled test because
 it changes one non-code resource while leaving bootloader, AP, factory image,
 outer metadata, and file length unchanged.
+
+## Minimal incremental candidate
+
+The official 3.1.175 -> 3.1.190 update is mode 2 and carries the exact
+`vela_ota` component followed by only the archives that changed. The tool
+`tools/build_incremental_candidate.py` emits the same container shape with
+`version.ini` plus the patched `MiSansF-Demibold.ttf` archive. The generated
+candidate is 590,301 bytes, has mode 2, and passes the archive/CRC validator and
+the version-aware preflight from a 3.1.175 baseline. It is a better controlled
+OTA experiment than sending the 50 MB full image, but it still has no device
+acceptance result and must not be flashed without a recovery plan.

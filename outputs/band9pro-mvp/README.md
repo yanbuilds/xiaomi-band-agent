@@ -36,6 +36,11 @@ AstroBox 发送前的 MiWear mass envelope 可用
 它适合做结构对照；由于设备已经运行 3.1.175，实际 OTA 测试优先使用官方
 3.1.190 升级路径对应的候选，避免同版本升级被设备策略拒绝。
 
+另外生成了更小的增量候选：
+[`n67cn-v3.1.190-font-incremental.bin`](n67cn-v3.1.190-font-incremental.bin)，
+大小 590,301 字节，沿用官方 mode-2 外层组件，只携带 `version.ini` 和字体分区。
+它通过归档/CRC 校验和 3.1.175→3.1.190 版本预检；设备签名验证与真机恢复能力仍未验证。
+
 ## 先确认型号与连接方式
 
 核对源码：Gadgetbridge GitHub 镜像提交 a0948ee1cbc2a870f91d313f8e37df5f524465f7；
