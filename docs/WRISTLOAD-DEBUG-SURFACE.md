@@ -18,6 +18,11 @@ authenticated bootloader shell, or that it disables RSA verification. It must
 therefore remain a static reverse-engineering lead, not an experimental
 command to send.
 
+The project's own debug page disables the control while another transfer is
+running and displays a warning that switching modes can lose device data and
+may make it unrecoverable. That warning is consistent with treating `13/0` as
+a destructive state transition rather than a harmless capability query.
+
 The safe next use is to locate these command handlers in an authorized debug
 APK or a passive SPP capture, then compare the returned status without changing
 boot mode. A complete backup and recovery path is required before any stateful
