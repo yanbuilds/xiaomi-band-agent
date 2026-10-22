@@ -16,6 +16,12 @@ to the Gadgetbridge fork.  The patch accepts both full (`3.x.y`) and
 incremental (`CONBINE_...`) n67cn descriptors while keeping the existing
 upload service unchanged.
 
+The patch changes only `parseAsFirmware()`.  A source diff audit confirms that
+the MD5 calculation, `TYPE_FIRMWARE = 0x20`, size field, resume offset, chunk
+header, and CRC32 code are untouched.  The local fork's `git apply --check` and
+`git diff --check` both pass.  Full Gradle compilation still requires the
+Gradle 9.5.1 distribution, which is not cached in this environment.
+
 Use the generated OTA JSON manifest to log the same version and MD5 that are
 sent in the protobuf request.  Test with an unmodified official image first;
 the watch performs its own signature and package checks after transfer.
