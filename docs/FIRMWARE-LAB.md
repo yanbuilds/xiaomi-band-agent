@@ -47,6 +47,10 @@ modification method. `tools/list_embedded_archives.py` enumerates these blocks.
 The next target is the container/updater parser in AstroBox, rather than blind
 binary patching.
 
+The REA workflow and commands are documented in [REA.md](./REA.md). The
+project keeps the local Python inspectors because they produce reproducible
+reports even when external reverse-engineering providers are unavailable.
+
 ## Flashing gate
 
 Before any write operation we need a verified device backup, the exact model
