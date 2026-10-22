@@ -6,6 +6,13 @@ It includes factory and diagnostic operations such as `AT^DID?`, `AT^KEY?`,
 that could change boot or storage state, including `AT^JUMP`, `AT^FTYRESET`,
 `AT^REBOOT`, `AT^NEW_FILE`, and `AT^CLEAN_DIR`.
 
+The same AP symbol index places notification and haptic functions in the same
+image, including `notifications_mass_data_page_handle`, `parsing_protobuf`,
+`vibrator_set_mode`, `vibrate_driver_start`, and `vibrate_driver_stop`. This
+confirms that notification and vibration behavior is implemented in the AP
+image; it does not expose a new host command or make those functions safe to
+call directly.
+
 This is useful evidence for locating the factory command dispatcher during
 future disassembly. It is not an unlocked interface: a string table does not
 show which transport reaches the parser, whether a session is authenticated,
