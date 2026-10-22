@@ -5,6 +5,9 @@
     <div for="{{request.options}}" class="option" onclick="choose($item.id)">
       <text class="optionLabel">{{ $item.text }}</text>
     </div>
+    <div class="voice" onclick="voice()">
+      <text class="voiceLabel">语音回复</text>
+    </div>
     <text class="status">{{ status }}</text>
   </div>
 </template>
@@ -15,6 +18,8 @@
 .body { color: #dddddd; font-size: 19px; margin-bottom: 18px; lines: 4; }
 .option { height: 54px; margin-bottom: 9px; padding: 14px; background-color: #202020; border-radius: 10px; }
 .optionLabel { color: #ffffff; font-size: 18px; }
+.voice { height: 50px; margin-top: 4px; padding: 12px; background-color: #123b52; border-radius: 10px; }
+.voiceLabel { color: #9edcff; font-size: 18px; text-align: center; }
 .status { color: #8ed1fc; font-size: 15px; margin-top: 16px; }
 </style>
 
@@ -68,6 +73,15 @@
         type: 'option_selected',
         request_id: this.request.request_id,
         option_id: optionId
+      }) } })
+    },
+
+    voice() {
+      if (!this.request || !this.request.request_id || !this.connect) return
+      this.status = '请对手机说话…'
+      try { vibrator.vibrate({ mode: 'short' }) } catch (_) {}
+      this.connect.send({ data: { data: JSON.stringify({
+        type: 'voice_request', request_id: this.request.request_id
       }) } })
     }
   }

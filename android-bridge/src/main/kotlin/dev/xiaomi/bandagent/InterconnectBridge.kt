@@ -13,6 +13,7 @@ import org.json.JSONObject
 class InterconnectBridge(
     private val packageName: String,
     private val sendToBand: (ByteArray) -> Unit,
+    private val onVoiceRequest: (requestId: String) -> Unit = {},
     private val nowSeconds: () -> Long = { System.currentTimeMillis() / 1000L },
 ) {
     private data class Pending(val options: Set<String>, val expiresAt: Long)
@@ -52,8 +53,14 @@ class InterconnectBridge(
     fun onBandMessage(bytes: ByteArray) {
         require(bytes.size <= 4096) { "interconnect payload too large" }
         val message = JSONObject(String(bytes, Charsets.UTF_8))
-        require(message.optString("type") == "option_selected")
+        val type = message.optString("type")
         val requestId = message.getString("request_id")
+        if (type == "voice_request") {
+            require(pending.containsKey(requestId)) { "unknown request" }
+            onVoiceRequest(requestId)
+            return
+        }
+        require(type == "option_selected")
         val optionId = message.getString("option_id")
         val request = pending[requestId] ?: return
         if (nowSeconds() < request.expiresAt && request.options.contains(optionId)) {

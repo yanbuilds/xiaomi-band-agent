@@ -79,3 +79,5 @@ The CN Band 9 Pro implementation used by the open-source Gadgetbridge fork
 state machine. In production, map its `Command` values to the generated
 `XiaomiProto.Command` builder in Gadgetbridge's `XiaomiRpkService`; do not
 create a second Bluetooth connection or send a guessed fingerprint.
+
+oice_request 由手环发起，手机收到后调用 Android SpeechRecognizer；识别结果继续提交给 Grok，并回传 ck 或新的 question。手环自身只负责按钮和震动，不直接录音。
