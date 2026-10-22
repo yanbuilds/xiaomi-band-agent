@@ -56,6 +56,12 @@ a recovery path have been verified.  `tools/n67cn_readonly_uart_probe.py`
 wraps the upstream flasher, caps a probe at 1 MiB, rejects write mode, and
 records a JSON classification of the dump.
 
+The ATC1441 repository currently has an open issue specifically titled
+“UART pads on Mi Band 9 Pro” with no maintainer answer or pinout.  This is
+independent confirmation that the missing Pro test-point mapping is still an
+open hardware question, rather than a software flag we can infer from the
+ordinary Band 9 flasher.
+
 The OTA-related code has explicit `app_verify` strings for reading a ZIP
 central-directory offset and a `signature_block`, hashing the signed bytes,
 then calling `mbedtls_pk_verify`/`verify_block_signature`.  That is a real
