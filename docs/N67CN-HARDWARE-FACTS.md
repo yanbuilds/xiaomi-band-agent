@@ -17,6 +17,13 @@ nandflash_erase_block
 nandflash_get_size
 ```
 
+The same AP also contains YAFFS diagnostics (`yaffs: NAND geometry problems`,
+ECC fixed/unfixed messages, block retirement, and `inband_tags`).  The raw
+storage is therefore a managed YAFFS/NAND volume, rather than a flat file
+stream.  A safe writer must preserve YAFFS tags and bad-block retirement rules;
+blindly placing the 50-MB OTA bytes at NAND offset zero would destroy the
+filesystem metadata.
+
 For planning a future reader, the GD5F2GM7 datasheet specifies a nominal
 2-Gbit device with 2,048-byte pages and internal-ECC page storage of 2,048 +
 64 bytes.  The conservative model used by

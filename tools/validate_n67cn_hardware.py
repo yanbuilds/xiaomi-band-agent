@@ -14,6 +14,9 @@ MARKERS = (
     b"nandflash_write_page",
     b"nandflash_erase_block",
     b"nandflash_get_size",
+    b"yaffs: NAND geometry problems",
+    b"yaffs: **>>Block %d marked for retirement",
+    b"inband_tags",
 )
 
 
