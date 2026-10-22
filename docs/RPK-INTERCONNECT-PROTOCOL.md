@@ -25,3 +25,7 @@ firmware and therefore cannot be used as evidence that a custom firmware image
 is flashable.
 
 Reference: [Sany18/smart-band protocol notes](https://github.com/Sany18/smart-band/tree/main/protocol-notes).
+
+## Local build check
+
+On 2026-10-23, `band-app` built successfully with `aiot-toolkit 2.0.5` on Node 24.13.0. The generated `dev.xiaomi.bandagent.debug.0.1.0.rpk` passed the local validator (11 files, 6 hashed files, zero mismatches). This is a debug RPK package; the toolkit log shows bundled local signing materials, but the resulting `CERT` remains a `hash.json` integrity manifest rather than AP/BL firmware signing.
