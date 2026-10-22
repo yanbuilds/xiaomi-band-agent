@@ -80,6 +80,29 @@ The container parser and ZIP CRC check both pass.  This is a structural test
 artifact only; it has not been sent to a band and is not claimed to pass the
 device's OTA verifier.
 
+## Concatenated archive map
+
+The full n67cn image contains 258 independent ZIP archives after the outer
+header, rather than one monolithic ZIP.  `index_n67cn_archives.py` reconstructs
+each archive boundary from its EOCD and central-directory fields.  The first
+3.1.190 archives are the touch/display firmware, boot blocks, AP, factory image,
+and resource blocks; the last archives contain the MiSans font files.  The
+archives are separated by four bytes and have stable offsets within a release.
+
+```powershell
+python tools/index_n67cn_archives.py `
+  work/firmware-lab/n67cn_v3.1.190_full.bin `
+  --json work/firmware-lab/n67cn_archives_190.json
+```
+
+`patch_n67cn_archive.py` can now produce a reproducible, size-preserving
+resource experiment by changing one non-code ZIP member and updating its local
+and central-directory CRCs.  Rebuilding the MiSans archive at `0x2ffc321`
+produces the same candidate SHA-256 as the earlier experiment.  Re-indexing
+shows 258 valid archives and exactly one changed archive, which proves that the
+candidate is a correctly formed container.  It does not prove the vendor
+signature policy will accept that resource change.
+
 ## Consequence for a flashable custom image
 
 We can now edit and rebuild resources locally, and we can inspect AP/boot
