@@ -404,3 +404,7 @@ dispatcher was found alongside them. Their presence therefore does not
 justify sending raw writes or producing a modified bootloader. A physical
 test-pad capture and a reversible read-only UART transcript remain required
 before any write-path experiment.
+
+## RPK validation snapshot (2026-10-23)
+
+`outputs/band9pro-mvp/band-agent-debug.rpk` passes the local package-integrity validator: 11 files, 6 hashed files, no hash mismatches. Its `CERT`/`hash.json` is only a package-integrity manifest; the validator explicitly warns that this is not a firmware signature. The three local MVP tests also pass. This artifact is suitable for the quick-app control-plane experiment, not for AP/BL firmware flashing.
