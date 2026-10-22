@@ -15,3 +15,13 @@
 因此本项目的 `font-rebuilt` 和 `font-incremental-fullset` 只能标为“结构完整的
 自定义候选包”。只有在 n67cn 真机上通过 `PrepareOta`、签名校验、重启和功能回归后，
 才能升级为“可刷入包”。在此之前，官方 3.1.190 包仍是唯一可作为恢复基线的包。
+
+## 2026-10-22 再核查
+
+ATC1441 项目的 [Band 9 Pro UART issue](https://github.com/atc1441/MiBand10-BES2700iMP-BEST1503-Hacking/issues/4)
+仍处于 open 状态，没有针脚照片、启动日志或作者确认。因此目前没有新的
+9 Pro 低级刷写证据可用于修改这条结论。
+
+独立的 [wrist-tarot RPK 项目](https://github.com/yansheng1014/wrist-tarot)
+确认 Band 9 Pro 的公开 Vela 快应用构建目标（336 宽度、`.rpk` 产物），但它同样
+不是 AP/bootloader 固件，也不提供签名绕过。
