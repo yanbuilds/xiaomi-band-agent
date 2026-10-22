@@ -61,3 +61,7 @@ or OTA channel-6 marker in the shared logs. It did find ordinary `bootmode`
 and signature-related text, which is too generic to establish that the factory
 command was executed. This is negative evidence only; it does not prove that
 the command is unavailable on the device.
+
+## 2026-10-23 extraction pass
+
+A fresh shared-storage-only pull was completed while the phone remained locked. The scanner found `beaconKey`, `irqKey`, `encryptKey`, and `token` fields in the exported logs; output was masked and the values were written only to ignored `work/mihealth/credentials.local`. No `authKey` field was found. The raw pulled logs were deleted after the scan. These fields are not assumed interchangeable: the next safe validation is a local Gadgetbridge SPP handshake using the user-authorized key, with no firmware or factory command sent.
