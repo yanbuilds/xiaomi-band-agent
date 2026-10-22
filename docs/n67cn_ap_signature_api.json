@@ -1,0 +1,19 @@
+{
+  "path": "work\\firmware-lab\\vela_ap.bin",
+  "size": 7775288,
+  "sha256": "3e264bc267431ec71843cc7c2e4acd928b9280ea39ee1cd888636adcebabf82f",
+  "markers": {
+    "app_verify.c": 1,
+    "app_verify_info": 14,
+    "mbedtls_pk_parse_public_key": 1,
+    "mbedtls_pk_verify": 1,
+    "verify_block_signature": 1,
+    "rsaEncryption": 1,
+    "RSASSA-PSS": 1,
+    "signature_block": 5,
+    "central_directory_offset": 1,
+    "sign verify failed": 2,
+    "verify ok!": 1
+  },
+  "interpretation": "The AP contains an application/package signature-verification surface. This inventory cannot recover a private key or prove that any host-side flash command is exposed."
+}
