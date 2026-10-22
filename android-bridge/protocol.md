@@ -62,3 +62,20 @@ list installed quick apps
 
 AstroBox's public Xiaomi core uses this exact `BasicInfo` pair for
 `SendPhoneMessage`, `LaunchApp`, and status synchronization.
+
+## Exact Xiaomi RPK subtypes
+
+The CN Band 9 Pro implementation used by the open-source Gadgetbridge fork
+`Sany18/Gadgetbridge` routes these messages inside `Command.type = 20`:
+
+| subtype | direction | protobuf payload |
+|---:|---|---|
+| 6 | watch → phone | `RpkInfoList(id=packageName, sha=fingerprint)` status request |
+| 7 | phone → watch | `RpkAppStatus(basicInfo, status=1)` |
+| 8 | phone → watch | `RpkAppMessage(basicInfo, message)` |
+| 9 | watch → phone | `RpkAppMessage(basicInfo, message)` |
+
+`RpkInterconnectRouter.kt` contains a transport-neutral implementation of this
+state machine. In production, map its `Command` values to the generated
+`XiaomiProto.Command` builder in Gadgetbridge's `XiaomiRpkService`; do not
+create a second Bluetooth connection or send a guessed fingerprint.
