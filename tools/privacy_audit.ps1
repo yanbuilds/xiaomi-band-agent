@@ -1,14 +1,21 @@
 [CmdletBinding()]
 param(
-  [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+  [string]$RepoRoot
 )
 
 $ErrorActionPreference = 'Stop'
+$scriptPath = $MyInvocation.MyCommand.Path
+if ([string]::IsNullOrWhiteSpace($scriptPath)) { $scriptPath = $PSCommandPath }
+if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
+  $RepoRoot = (Resolve-Path (Join-Path (Split-Path -Parent $scriptPath) '..')).Path
+}
 Push-Location $RepoRoot
 try {
   $tracked = @(git ls-files)
   $sensitiveTracked = @($tracked | Where-Object {
-    $_ -match '(?i)(credentials?|secret|token|auth(key)?|beacon(key)?|encrypt(key)?|mifitness-log|wearablelog|\.log$)'
+    # Documentation and source names may mention credentials safely. Flag only
+    # likely secret-bearing artifacts or raw log files.
+    $_ -match '(?i)(^|[/\\])(credentials?(\.local)?|.*\.(log|key|pem|p12|pfx)$|mifitness-log-extract|wearablelog)([/\\]|$)'
   })
   $rawDirs = @(
     (Join-Path $RepoRoot 'work/mifitness-log-extract'),
