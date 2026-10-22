@@ -408,3 +408,5 @@ before any write-path experiment.
 ## RPK validation snapshot (2026-10-23)
 
 `outputs/band9pro-mvp/band-agent-debug.rpk` passes the local package-integrity validator: 11 files, 6 hashed files, no hash mismatches. Its `CERT`/`hash.json` is only a package-integrity manifest; the validator explicitly warns that this is not a firmware signature. The three local MVP tests also pass. This artifact is suitable for the quick-app control-plane experiment, not for AP/BL firmware flashing.
+
+The same public-key verifier also accepts the official 3.1.187 full image (`sha256=6d33afe200897d6c307f98738176d95c55e86ca568c4a4fb8d8f653c43924cd2`). This confirms the key and trailer format are stable across 3.1.175/3.1.187/3.1.190 official images; it does not create signing capability for modified data.
