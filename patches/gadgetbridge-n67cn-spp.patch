@@ -1,0 +1,23 @@
+commit bafa9d204606b736b0d6718223c7fceb4c67e606
+Author:     Wanghao2025 <1712935214@qq.com>
+AuthorDate: Fri Oct 23 01:25:07 2026 +0800
+Commit:     Wanghao2025 <1712935214@qq.com>
+CommitDate: Fri Oct 23 01:25:07 2026 +0800
+
+    Use Classic SPP for Band 9 Pro
+
+diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/devices/xiaomi/watches/MiBand9ProCoordinator.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/devices/xiaomi/watches/MiBand9ProCoordinator.java
+index ab4e5c2..d1c9849 100644
+--- a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/devices/xiaomi/watches/MiBand9ProCoordinator.java
++++ b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/devices/xiaomi/watches/MiBand9ProCoordinator.java
+@@ -43,6 +43,10 @@ public class MiBand9ProCoordinator extends XiaomiCoordinator {
+ 
+     @Override
+     public ConnectionType getConnectionType() {
++        // Mi Fitness 3.59.1 logs a successful n67cn session over Classic SPP:
++        // transport 2.1.2, then sendAppVerify/sendAppConfirm, followed by
++        // protobuf sync calls.  Keep BLE as a separate probe, but use the
++        // proven SPP path for the real coordinator.
+         return ConnectionType.BT_CLASSIC;
+     }
+ 
