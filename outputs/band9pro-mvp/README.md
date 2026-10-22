@@ -23,6 +23,10 @@ Grok bot 通过下面的通用 API 接入，无须把蓝牙密钥交给模型。
 离线归档、CRC 和外层容器检查，但尚未在真实手环上验证 OTA 签名或刷写接受，
 不能当作已解锁固件。
 
+AstroBox 发送前的 MiWear mass envelope 可用
+`tools/build_mass_firmware.py` 生成并校验；该 envelope 只负责 MD5/长度/CRC32
+和分片传输，不能替代手环端签名校验。
+
 ## 先确认型号与连接方式
 
 核对源码：Gadgetbridge GitHub 镜像提交 a0948ee1cbc2a870f91d313f8e37df5f524465f7；

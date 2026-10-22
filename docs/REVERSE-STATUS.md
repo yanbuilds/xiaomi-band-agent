@@ -107,6 +107,12 @@ signature policy will accept that resource change.
 CRC values, and verifies that `version.ini` reports the actual archive count.
 Both the official 3.1.190 image and the resource candidate pass these checks.
 
+The AstroBox public sender wraps the image in a MiWear mass envelope before
+chunking it: `0x00 | 0x20(FIRMWARE) | MD5 | length(u32 LE) | image | CRC32(u32
+LE)`.  `build_mass_firmware.py` reproduces and verifies this envelope.  The
+watch still performs its own OTA checks after receiving it; an envelope that
+passes MD5/CRC is not a signature bypass.
+
 The same indexer finds a 9-archive 3.1.175→3.1.190 incremental package.  It
 contains the official AP, BL2 and factory blocks plus language/NFC resources.
 The patcher permits non-`.bin` members in this incremental form, while
