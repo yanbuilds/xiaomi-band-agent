@@ -50,8 +50,9 @@ class AuthMaterial:
     device_iv: bytes
     app_iv: bytes
 
-    def device_signature(self, phone_random: bytes, device_random: bytes, device_name: str = "") -> bytes:
-        message = device_random + phone_random + device_name.encode()
+    def device_signature(self, phone_random: bytes, device_random: bytes,
+                         binding_extra: str = "") -> bytes:
+        message = device_random + phone_random + binding_extra.encode()
         return hmac.new(self.device_key, message, hashlib.sha256).digest()
 
     def app_signature(self, phone_random: bytes, device_random: bytes) -> bytes:
@@ -65,7 +66,7 @@ class AuthMaterial:
 
 def verify_device_signature(material: AuthMaterial, phone_random: bytes,
                             device_random: bytes, signature: bytes,
-                            device_name: str = "") -> bool:
-    expected = material.device_signature(phone_random, device_random, device_name)
+                            binding_extra: str = "") -> bool:
+    expected = material.device_signature(phone_random, device_random, binding_extra)
     return hmac.compare_digest(expected, signature)
 

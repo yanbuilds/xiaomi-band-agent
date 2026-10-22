@@ -15,7 +15,9 @@ The observed sequence is:
    material, `app_random || device_random` as salt, and `miwear-auth` as info.
    The first 16 bytes are the device AES key, the next 16 the app AES key, and
    the following 4-byte pairs are device/app IV prefixes.
-5. Verify HMAC-SHA256(device key, `device_random || app_random || device name`).
+5. Verify HMAC-SHA256(device key, `device_random || app_random || binding extra`).
+   In the Wi-Fi call site this optional extra is the device's OOB/binding value;
+   it is empty for the no-extra form.
 6. Sign `app_random || device_random` with the app key.
 7. Encrypt the device-info protobuf with AES-CCM using app key and nonce
    `app_iv || uint32_le(0) || uint32_le(0)`, with a 4-byte authentication tag.
