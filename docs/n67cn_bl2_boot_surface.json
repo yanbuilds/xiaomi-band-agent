@@ -1,0 +1,18 @@
+{
+  "image": "work/firmware-lab/carved190/vela_bl2.bin",
+  "size": 299516,
+  "romfs_offset": "0x45cd0",
+  "strings": {
+    "/data/ota/b283_ota.bin": "0x41cbc",
+    "/dev/flash_ota": "0x41cd3",
+    "/data/ota/vela_ota.bin": "0x48610",
+    "sign verify start": "0x4845a",
+    "sign verify ok": "0x48472",
+    "sign verify failed!": "0x4849d",
+    "bootloader": "0x41679",
+    "recovery": "0x41684",
+    "resetcause": "0x41246",
+    "sw_bootmode": "0x40658",
+    "hw_bootmode": "0x4066e"
+  }
+}
