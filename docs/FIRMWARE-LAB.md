@@ -90,6 +90,16 @@ The project will prioritize signed RPK/resource installation and the existing
 third-party app/interconnect messages, then use firmware research to understand
 the verifier rather than attempting to bypass it.
 
+Use `tools/firmware_container.py` for the authoritative outer-container view.
+It uses the ZIP central directory instead of the first `PK` byte sequence,
+because the raw vendor payload itself contains compressed bytes that look like
+ZIP headers:
+
+```powershell
+python tools/firmware_container.py work/firmware-lab/n67cn_v3.1.190_full.bin \
+  --extract-payload work/firmware-lab/n67cn_v3.1.190.payload
+```
+
 ## Flashing gate
 
 Before any write operation we need a verified device backup, the exact model
