@@ -36,20 +36,36 @@ adb install -r app/build/outputs/apk/mainlineDebug/app-mainline-debug.apk
 
 任一项失败都停止测试，恢复官方连接，不发送自定义包。
 
+发送官方包前可先做离线签名基线：
+
+```powershell
+python tools/ota_preflight.py `
+  work/firmware-lab/n67cn_v3.1.190_from_v3.1.175.bin `
+  --current-version 3.1.175 `
+  --public-key work/firmware-lab/n67cn_public.pem
+```
+
+该命令会验证官方 268 字节 RSA 尾部；必须得到
+`signature_verified: true` 才进入发送阶段。
+
 ## 3. 第二阶段：资源候选包
 
-从 3.1.175 设备开始测试以下文件：
+从 3.1.175 设备开始，若需要验证设备端拒绝路径，可测试以下保留签名尾部
+形状但签名必然失效的负控制文件：
 
-`outputs/band9pro-mvp/n67cn-v3.1.190-font-incremental-fullset.bin`
+`outputs/band9pro-mvp/n67cn-v3.1.190-font-incremental-signed-shape.bin`
 
 发送前核对：
 
 ```text
 size = 8270038
-sha256 = 6831f9951c1ab184a43eb39b5fe2af9dacbc983462848a8253037aae11adf6fd
+sha256 = a571555940d02755699a616ef8bc09b21b102f52a65c93f2fb4aa803c26a2741
 mode = 2
 target version = 3.1.190
 ```
+
+发送前执行带公钥的 preflight；它应当拒绝该文件，因为
+`signature_verified` 为 `false`。不要把“结构有效”解释为“可以刷入”。
 
 验收重点是设备返回的安装结果，而不是手机端“上传完成”：
 

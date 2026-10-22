@@ -142,11 +142,17 @@ offset +0x108 uint32 magic 0x805a5a7e (big-endian display)
 
 The signed message is exactly `image[:archive_end] + trailer[:8]`, where
 `archive_end` is the final ZIP EOCD end. `tools/verify_n67cn_outer_signature.py`
-reports `signature_verified: true` for both official images. The same check
-returns `InvalidSignature` for `n67cn_v3.1.190_font-rebuilt.bin` after its
-single font-byte change. This is direct cryptographic proof that the
-resource-only candidate cannot be a valid n67cn firmware package without the
-vendor private key.
+reports `signature_verified: true` for the official 3.1.175 full image, the
+official 3.1.190 full image, and the official 3.1.175→3.1.190 incremental
+image. The same check returns `InvalidSignature` for both the full resource
+repack and the new signed-shape incremental candidate after its single font
+change. This is direct cryptographic proof that the resource-only candidate
+cannot be a valid n67cn firmware package without the vendor private key.
+
+The signed-shape incremental candidate preserves the 268-byte trailer and
+updates its first CRC word for the appended font archive, so it is a useful
+device-side negative control. It is not a signed firmware image. Its SHA-256
+is `a571555940d02755699a616ef8bc09b21b102f52a65c93f2fb4aa803c26a2741`.
 
 For the live acceptance harness, the newly reviewed
 [MiWearBridge](https://github.com/batareya16/MiWearBridge) can hook Mi Fitness
