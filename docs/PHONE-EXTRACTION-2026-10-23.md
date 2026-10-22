@@ -45,3 +45,13 @@ The phone also contained two `Download/wearablelog/*.zip` migration archives.
 Their Mi Fitness main logs likewise had `authKey: null`; the local raw ZIPs were
 deleted immediately after inspection because they contained account/session
 log material. The archives on the phone were not modified.
+
+## OTA log marker audit
+
+On 2026-10-23 the shared logs were read through ADB only for keyword counts;
+no log lines were printed or copied into the repository. `XiaomiFit.device.log`
+contains OTA, verification, and authentication markers, while
+`XiaomiFit.main.log` contains OTA, verification, authentication, and SPP
+markers. These markers show that the official app records an OTA/authentication
+path, but they do not expose a vendor signature, an unlock token, or an
+accepted custom image. Raw log copies were removed after the count-only audit.
