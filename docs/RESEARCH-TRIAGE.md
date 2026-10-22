@@ -36,3 +36,9 @@ Band 10 上验证。对我们的 `n67cn` 样本，已验证相同 Vela 启动头
 来源：[Gadgetbridge](https://codeberg.org/Freeyourgadget/Gadgetbridge)、
 [miband-mcp](https://github.com/kirisawa-subaru/miband-mcp)、
 [BEST1503 hacking](https://github.com/atc1441/MiBand10-BES2700iMP-BEST1503-Hacking)。
+
+## Sany18/smart-band（独立 n67cn 交叉证据）
+
+该项目的公开说明把 `n67cn` 与 `n67gl` 的固件型号检查列为未解决问题，没有给出跨区刷写或签名绕过；同时记录了 Band 9 Pro 的 RPK 快应用路线，并指出 RPK 包里的 `CERT` 在实际安装链路中不是固件级厂商签名。它还提供 Vela/aiot-toolkit 模拟器和 quick-app 开发资料。这个结果与本仓库的签名审计一致：RPK 是可继续推进的控制面，不能当作 AP/BL 固件刷写能力。
+
+来源：[Sany18/smart-band](https://github.com/Sany18/smart-band)。
