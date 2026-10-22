@@ -52,7 +52,9 @@ The next hardware-dependent step is therefore a UART **read-only** probe: use
 the ATC programmer only to identify the ROM advertisement and read a small
 flash range, then compare the returned boot header and flash ID with the
 n67cn components.  No write command should be sent until a complete backup and
-a recovery path have been verified.
+a recovery path have been verified.  `tools/n67cn_readonly_uart_probe.py`
+wraps the upstream flasher, caps a probe at 1 MiB, rejects write mode, and
+records a JSON classification of the dump.
 
 The OTA-related code has explicit `app_verify` strings for reading a ZIP
 central-directory offset and a `signature_block`, hashing the signed bytes,
