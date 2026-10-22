@@ -1,0 +1,21 @@
+<template>
+  <div class="page">
+    <text class="title">{{ request.title || 'Band Agent' }}</text>
+    <text class="body">{{ request.text || '等待手机消息' }}</text>
+    <list if="request.options">
+      <list-item for="option in request.options" class="option" onclick="choose(option.id)">
+        <text>{{ option.text }}</text>
+      </list-item>
+    </list>
+    <text class="status">{{ status }}</text>
+  </div>
+</template>
+
+<style>
+.page { flex-direction: column; padding: 22px; background-color: #000000; }
+.title { color: #ffffff; font-size: 25px; font-weight: bold; margin-bottom: 16px; }
+.body { color: #dddddd; font-size: 19px; margin-bottom: 20px; }
+.option { height: 58px; margin-bottom: 10px; padding: 16px; background-color: #202020; border-radius: 10px; }
+.option text { color: #ffffff; font-size: 18px; }
+.status { color: #8ed1fc; font-size: 15px; margin-top: 16px; }
+</style>
