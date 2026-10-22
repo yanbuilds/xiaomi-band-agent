@@ -1,0 +1,60 @@
+{
+  "full_image": "work\\firmware-lab\\miwear.watch.n67cn_v3.1.187_full_6d33afe2.bin",
+  "incremental_image": "work\\firmware-lab\\miwear.watch.n67cn_v3.1.190_from_v3.1.187_incremental_2d4753a0.bin",
+  "incremental_archive_count": 5,
+  "incremental_archives": [
+    {
+      "start": 576632,
+      "end": 620785,
+      "size": 44153,
+      "members": [
+        "vela_bl.bin"
+      ],
+      "sha256": "d90b0a8f743bb045dc181563ec006489cf05f1d81e77623e1d981f52331a48d8"
+    },
+    {
+      "start": 620789,
+      "end": 812353,
+      "size": 191564,
+      "members": [
+        "vela_bl2.bin"
+      ],
+      "sha256": "6913988df024243a44a64ee670393fa5146d2a6873b1f06308dc42e490071edc"
+    },
+    {
+      "start": 812357,
+      "end": 5629614,
+      "size": 4817257,
+      "members": [
+        "vela_ap.bin"
+      ],
+      "sha256": "5de77d00182186fc80db6e8f140cbf6b2be34bd31773aacd33fb7c0a7884ba93"
+    },
+    {
+      "start": 5629618,
+      "end": 7032542,
+      "size": 1402924,
+      "members": [
+        "vela_factory.bin"
+      ],
+      "sha256": "858022fbbcaacaade814a96c99245250dbddb5252192a6c8ea8a79d98e6be967"
+    },
+    {
+      "start": 7032546,
+      "end": 7032768,
+      "size": 222,
+      "members": [
+        "version.ini"
+      ],
+      "sha256": "f2249b5931fee989288e4fd964226447def0d68cc08d564b2f8f1349ca8bdf1a"
+    }
+  ],
+  "protected_components_present": [
+    "vela_ap.bin",
+    "vela_bl.bin",
+    "vela_bl2.bin",
+    "vela_factory.bin"
+  ],
+  "unknown_members": [],
+  "interpretation": "Official 187-to-190 package replaces bootloader/AP/factory components; this is evidence of the vendor update layout, not a way to sign a custom package."
+}
