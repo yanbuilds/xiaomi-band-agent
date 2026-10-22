@@ -39,10 +39,13 @@ third-party flashing is safe or that the image can be modified.
    Git because they are vendor copyrighted and large.
 
 Initial measurements show approximately 8.0 bits/byte entropy in both full
-images and almost every byte differs between 3.1.175 and 3.1.190. This is
-consistent with a packed or encrypted container; ordinary string replacement
-is not a viable modification method. The next useful target is the container
-header and the updater/parser in AstroBox, rather than blind binary patching.
+images and almost every byte differs between 3.1.175 and 3.1.190. The first
+embedded ZIP header appears at offset `0x446f0`, and repeated ZIP-like resource
+blocks follow it. The images are therefore packed resource containers rather
+than flat MCU binaries; ordinary string replacement is not a viable
+modification method. `tools/list_embedded_archives.py` enumerates these blocks.
+The next target is the container/updater parser in AstroBox, rather than blind
+binary patching.
 
 ## Flashing gate
 
