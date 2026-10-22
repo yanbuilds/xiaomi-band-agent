@@ -115,6 +115,19 @@ the public OpenVela APK-signing container at the outer level.  The tail and
 the `vela_ota` verifier still need a device/log or deeper disassembly to map;
 absence of a public marker is not evidence that it is unsigned.
 
+The public OpenVela demo key was also compared directly with the n67cn AP
+key.  Their 2048-bit modulus fingerprints differ:
+
+```text
+n67cn AP       f4ffe419c16bc3554f7e2172021e6493aa6c2fc05580cd4fd820eac4a7fcc8a9
+OpenVela demo  5d1e91beba35d4a18d2f34ce790411064a19b0371b7a467f289b85f791337491
+```
+
+Therefore the public OpenVela private key cannot sign an n67cn AP update.
+The ATC1441 Band 10 Pro issue reports an AOSP test-key/AVB arrangement for
+that different model; it cannot be transferred to `miwear.watch.n67cn`
+without matching the Pro image's own key and verifier.
+
 For the live acceptance harness, the newly reviewed
 [MiWearBridge](https://github.com/batareya16/MiWearBridge) can hook Mi Fitness
 with LSPosed, install RPK/firmware files, announce the companion app online,
