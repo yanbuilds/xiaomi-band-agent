@@ -1,0 +1,29 @@
+{
+  "image": "work\\firmware-lab\\n67cn_v3.1.190_from_v3.1.175.bin",
+  "current_version": "3.1.175",
+  "candidate_version": "3.1.190",
+  "checks": {
+    "package_valid": true,
+    "md5": "f5ddb3030b984db91ff329989d3ad2c2",
+    "sha256": "360cb9c46b3df3170d44fab8216996d2f53d7c14226d254027a485cf6aecbc7f",
+    "same_version_warning": false,
+    "version_is_newer": true
+  },
+  "signature": {
+    "image": "work\\firmware-lab\\n67cn_v3.1.190_from_v3.1.175.bin",
+    "size": 8255867,
+    "sha256": "360cb9c46b3df3170d44fab8216996d2f53d7c14226d254027a485cf6aecbc7f",
+    "eocd_offset": 8255577,
+    "archive_end": 8255599,
+    "trailer_size": 268,
+    "member_crc32": "78905e65",
+    "signature_metadata": "d652a608",
+    "trailer_magic": "805a5a7e",
+    "signed_sha256": "af9fb9d5d79b9d4cc4d3b3cf1f34153a5086166418c341856af5d3c6fb1d1567",
+    "signature_verified": true,
+    "error": null,
+    "warning": "Verification proves the supplied public key matches this image; it does not recover a private signing key."
+  },
+  "send_allowed_by_preflight": true,
+  "warning": "Without --public-key this tool cannot establish device signature acceptance; with it, the local RSA trailer must verify."
+}

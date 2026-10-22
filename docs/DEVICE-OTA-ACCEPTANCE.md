@@ -111,5 +111,8 @@ python tools/append_incremental_archive.py `
   --output work/firmware-lab/rebuilt-fullset.bin
 ```
 
-重建结果与 `outputs/band9pro-mvp/n67cn-v3.1.190-font-incremental-fullset.bin`
-均为 `6831f9951c1ab184a43eb39b5fe2af9dacbc983462848a8253037aae11adf6fd`。
+旧版不带尾部形状的重建结果仍保存在
+`outputs/band9pro-mvp/n67cn-v3.1.190-font-incremental-fullset.bin`，其 SHA-256
+为 `6831f9951c1ab184a43eb39b5fe2af9dacbc983462848a8253037aae11adf6fd`。
+新版负控制候选保留了 268 字节尾部，但 RSA 签名明确无效；这两个文件都不应
+被标记为已验证可刷入。
