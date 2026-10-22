@@ -42,3 +42,23 @@
 - 断线时保留未发送消息，恢复连接后按过期时间丢弃。
 - 选项最多 3 个，文字短于 60 个字符；详细分析只在 Android 展示。
 - 语音回复暂不写进协议，待确认 3.1.175 是否能把麦克风数据或小爱识别文本交给第三方应用。
+
+## Xiaomi interconnect binding
+
+The Xiaomi protobuf `MessageContent` carries the app package name and its
+fingerprint in addition to the JSON payload. The Android bridge must obtain
+both values from the installed quick-app list before sending. Do not invent a
+fingerprint and do not send to a package that is not currently installed.
+
+The transport sequence is:
+
+```text
+list installed quick apps
+  → find dev.xiaomi.bandagent
+  → retain package_name + fingerprint
+  → send MessageContent(JSON UTF-8)
+  → receive MessageContent from the band
+```
+
+AstroBox's public Xiaomi core uses this exact `BasicInfo` pair for
+`SendPhoneMessage`, `LaunchApp`, and status synchronization.
