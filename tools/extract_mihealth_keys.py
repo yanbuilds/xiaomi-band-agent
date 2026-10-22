@@ -7,6 +7,7 @@ use --out to write a local, ignored file for the sync client.
 from __future__ import annotations
 
 import argparse
+import glob
 import re
 from pathlib import Path
 
@@ -34,7 +35,8 @@ def main() -> None:
     parser.add_argument("logs", nargs="+", type=Path)
     parser.add_argument("--out", type=Path, help="write local credentials (mode 0600)")
     args = parser.parse_args()
-    found = scan(args.logs)
+    paths = [Path(item) for pattern in args.logs for item in (glob.glob(str(pattern)) or [str(pattern)])]
+    found = scan(paths)
     for field, values in found.items():
         if values:
             print(f"{field}: " + ", ".join(masked(value) for value in values))
