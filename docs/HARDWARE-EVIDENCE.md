@@ -24,3 +24,5 @@ published pinout/photo and 4 MiB NOR constants belong to the Band 10-tested
 setup (and an expected Band 9 family port). They are not evidence for the
 `n67cn` Pro board's 256 MiB NAND wiring. The flasher is therefore kept as a
 read-only research dependency, not a write procedure for this device.
+
+Additional n67cn Pro teardowns now cross-check the BES2700iMP platform and GD5F2GM7REYIG SPI memory: [CUKTECH/Kamera](https://www.kamera.com.tw/blogs/news/174366) and [EDN/我爱音频网](https://www.ednchina.com/technews/31123.html). Their published photos do not label UART or SecondStage pads, so they strengthen component identification only and do not change the pad-map gate.
