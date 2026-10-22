@@ -29,3 +29,13 @@ Reference: [Sany18/smart-band protocol notes](https://github.com/Sany18/smart-ba
 ## Local build check
 
 On 2026-10-23, `band-app` built successfully with `aiot-toolkit 2.0.5` on Node 24.13.0. The generated `dev.xiaomi.bandagent.debug.0.1.0.rpk` passed the local validator (11 files, 6 hashed files, zero mismatches). This is a debug RPK package; the toolkit log shows bundled local signing materials, but the resulting `CERT` remains a `hash.json` integrity manifest rather than AP/BL firmware signing.
+
+## Production RPK signing check
+
+`npm run release` was intentionally tested without creating or importing any
+certificate. `aiot-toolkit 2.0.5` compiled the app but stopped at packaging with
+`production ... problem with the certification path`. This confirms debug RPK
+building is independent of a user-owned signing key; no private key was
+created, copied, or committed. A production RPK would require a certificate
+chosen by the Xiaomi tooling/device ecosystem, which is separate from the
+vendor RSA key used for AP/BL firmware.
