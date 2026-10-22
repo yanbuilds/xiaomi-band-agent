@@ -1,0 +1,30 @@
+diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/devices/xiaomi/XiaomiFWHelper.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/devices/xiaomi/XiaomiFWHelper.java
+--- a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/devices/xiaomi/XiaomiFWHelper.java
++++ b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/devices/xiaomi/XiaomiFWHelper.java
+@@ -405,10 +405,19 @@ public class XiaomiFWHelper {
+     private boolean parseAsFirmware() {
+-        // Only test for Mi Band 8 Pro
+-        if (fw[0] == 96 && fw[1] == 90 && fw[2] == 90 && fw[4] == 126) {
+-            version = new String(fw, 4, 11, StandardCharsets.UTF_8);
+-            return true;
+-        }
+-        LOG.warn("File header not a firmware");
+-        return false;
++        // n67cn images start with "`ZZ~" followed by an ASCII descriptor.
++        if (fw.length >= 12 && fw[0] == 0x60 && fw[1] == 0x5a &&
++                fw[2] == 0x5a && fw[3] == 0x7e) {
++            int end = 4;
++            while (end < fw.length && fw[end] != 0) {
++                end++;
++            }
++            if (end == 4) {
++                LOG.warn("empty n67cn firmware version");
++                return false;
++            }
++            version = new String(fw, 4, end - 4, StandardCharsets.UTF_8);
++            return version.startsWith("3.") || version.startsWith("CONBINE_");
++        }
++        LOG.warn("File header not a supported n67cn firmware");
++        return false;
+     }
+ }
