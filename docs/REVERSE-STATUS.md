@@ -20,6 +20,13 @@ notification, interconnect, sleep, heart-rate, and vibration symbol strings,
 so the next stage can be done against the extracted image instead of the
 compressed outer container.
 
+The official `3.1.190_from_3.1.175` incremental package contains the same
+`vela_bl.bin`, `vela_bl2.bin`, `vela_ap.bin`, and `vela_factory.bin` bytes as
+the 3.1.190 full image; it is a smaller wrapper whose only unique payload is
+the NFC resource.  This gives us a reliable reference for reconstructing the
+container layout, but it also confirms that changing AP bytes would change a
+signed component rather than merely changing a UI resource.
+
 The AP also embeds the same 2048-bit RSA public modulus found in the outer
 firmware at AP offset `0x5b99e7`.  Its SHA-256 fingerprint is
 `f4ffe419c16bc3554f7e2172021e6493aa6c2fc05580cd4fd820eac4a7fcc8a9`.
