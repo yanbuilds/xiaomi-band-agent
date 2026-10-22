@@ -1,5 +1,12 @@
 # Band 9 Pro：本地同步 MVP 起点
 
+可直接安装的 Vela 快应用在仓库的
+[`band-agent-debug.rpk`](band-agent-debug.rpk)。它通过
+`@system.interconnect` 接收 Grok 问题、触发 `@system.vibrator`、显示最多
+三个选项，并把点击结果回传 Android。构建源码见
+[`band-app/`](../../band-app/)，协议和安装说明见
+[`docs/QUICKAPP-ROUTE.md`](../../docs/QUICKAPP-ROUTE.md)。
+
 交付范围：可运行的离线睡眠 v2 解析器、SQLite/FastAPI 单用户后端、自动化测试，
 以及需要集成进 Gadgetbridge 的 Java 适配源文件。不是已完成真机验证的 APK。
 尚未实现 Android 上传 Worker、配置界面、持久化 outbox 和 Agent 模型调用。
