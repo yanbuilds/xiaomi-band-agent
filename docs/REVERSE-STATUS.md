@@ -120,6 +120,11 @@ version accepts it.  A real test client should log the device's reported
 version, try the official image first, and preserve the same request fields
 before substituting the resource candidate.
 
+`build_ota_request_manifest.py` records the candidate's actual version, MD5,
+length, outer mode and SHA-256 in a reviewable JSON file.  For the current full
+candidate it emits version `3.1.190` and MD5
+`b86b1ca6f21c7b6e6aa839e1413bf0da`.
+
 The same indexer finds a 9-archive 3.1.175→3.1.190 incremental package.  It
 contains the official AP, BL2 and factory blocks plus language/NFC resources.
 The patcher permits non-`.bin` members in this incremental form, while

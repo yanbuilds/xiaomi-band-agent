@@ -27,6 +27,10 @@ AstroBox 发送前的 MiWear mass envelope 可用
 `tools/build_mass_firmware.py` 生成并校验；该 envelope 只负责 MD5/长度/CRC32
 和分片传输，不能替代手环端签名校验。
 
+`tools/build_ota_request_manifest.py` 会为同一文件生成 `PrepareOta` 请求清单，
+其中版本为 `3.1.190`、MD5 与文件绑定，便于在 Android/Gadgetbridge 日志中核对
+实际发送对象。
+
 ## 先确认型号与连接方式
 
 核对源码：Gadgetbridge GitHub 镜像提交 a0948ee1cbc2a870f91d313f8e37df5f524465f7；
