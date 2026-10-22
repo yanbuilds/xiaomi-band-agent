@@ -220,3 +220,15 @@ candidate is 590,301 bytes, has mode 2, and passes the archive/CRC validator and
 the version-aware preflight from a 3.1.175 baseline. It is a better controlled
 OTA experiment than sending the 50 MB full image, but it still has no device
 acceptance result and must not be flashed without a recovery plan.
+
+## New Band 9 Pro evidence from Sany18/smart-band
+
+The public Band 9 Pro notes provide two important checks against this path:
+China `n67cn` is not known to accept global `n67gl` firmware, while debug-built
+Vela RPK packages have been installed and run on real Band 9 Pro hardware. The
+RPK `META-INF/CERT` is described there as a ZIP containing SHA-256 hashes, not
+an RSA firmware signature. The same work documents the
+`system.interconnect` fingerprint handshake and a working phone-to-watch
+message channel. This makes the RPK route a device-tested control path for the
+Grok interaction, while the modified firmware candidate remains unverified.
+Source: https://github.com/Sany18/smart-band
