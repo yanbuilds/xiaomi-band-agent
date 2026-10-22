@@ -62,6 +62,12 @@ independent confirmation that the missing Pro test-point mapping is still an
 open hardware question, rather than a software flag we can infer from the
 ordinary Band 9 flasher.
 
+Additional hardware evidence is recorded in
+[`docs/N67CN-HARDWARE-FACTS.md`](N67CN-HARDWARE-FACTS.md): the Pro teardown and
+the AP's own factory-test strings identify a `gd5f2gm7` SPI-NAND path.  This is
+why the ordinary Band 9 flasher's 4-MB internal-Flash assumptions cannot yet be
+used for a Pro raw image.
+
 The OTA-related code has explicit `app_verify` strings for reading a ZIP
 central-directory offset and a `signature_block`, hashing the signed bytes,
 then calling `mbedtls_pk_verify`/`verify_block_signature`.  That is a real
