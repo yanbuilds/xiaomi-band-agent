@@ -16,6 +16,13 @@ Grok bot 通过下面的通用 API 接入，无须把蓝牙密钥交给模型。
 `miband-mcp` 适合作为 Agent/SQLite 同步层参考，BEST1503 SDK 适合作为固件刷写
 研究底座，Gadgetbridge 仍是 Android 蓝牙和 Xiaomi protobuf 的底座。
 
+固件研究产物：
+[`n67cn-v3.1.190-resource-experiment.bin`](n67cn-v3.1.190-resource-experiment.bin)
+是 50,330,500 字节的完整包，仅修改一个 MiSans 字体资源，SHA-256 为
+`6941be39567efba5f7a123f58ea21b9e2b35ad95b30bf0870df2d0246663a63b`。它已通过
+离线归档、CRC 和外层容器检查，但尚未在真实手环上验证 OTA 签名或刷写接受，
+不能当作已解锁固件。
+
 ## 先确认型号与连接方式
 
 核对源码：Gadgetbridge GitHub 镜像提交 a0948ee1cbc2a870f91d313f8e37df5f524465f7；
