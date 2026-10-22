@@ -3,7 +3,7 @@
     <text class="title">{{ request.title || 'Band Agent' }}</text>
     <text class="body">{{ request.text || '等待手机消息' }}</text>
     <div for="{{request.options}}" class="option" onclick="choose($item.id)">
-      <text>{{ $item.text }}</text>
+      <text class="optionLabel">{{ $item.text }}</text>
     </div>
     <text class="status">{{ status }}</text>
   </div>
@@ -14,7 +14,7 @@
 .title { color: #ffffff; font-size: 25px; font-weight: bold; margin-bottom: 16px; }
 .body { color: #dddddd; font-size: 19px; margin-bottom: 18px; lines: 4; }
 .option { height: 54px; margin-bottom: 9px; padding: 14px; background-color: #202020; border-radius: 10px; }
-.option text { color: #ffffff; font-size: 18px; }
+.optionLabel { color: #ffffff; font-size: 18px; }
 .status { color: #8ed1fc; font-size: 15px; margin-top: 16px; }
 </style>
 
