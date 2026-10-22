@@ -141,3 +141,13 @@ The safety gate therefore refuses the candidate before any device write.
 容器有效、版本从 `3.1.175` 升到 `3.1.190`、外层 RSA 签名验证通过，
 `send_allowed_by_preflight=true`。这只证明官方增量包满足本地安全门；本轮没有
 向手机或手环发送 OTA 数据。
+
+## 手机侧官方包交叉校验（只读）
+
+通过已连接的 ADB 设备只读检查 Mi Fitness 的下载目录，发现官方增量包已由应用
+缓存到 `miwear.watch.n67cn` 目录。未复制该文件、未读取日志内容，也未触碰认证
+字段；仅取得文件大小和摘要。设备侧文件大小为 `8,255,867` 字节，MD5 为
+`f5ddb3030b984db91ff329989d3ad2c2`，SHA-256 为
+`360cb9c46b3df3170d44fab8216996d2f53d7c14226d254027a485cf6aecbc7f`，与本地
+官方增量包完全一致。这证明手机实际使用的 OTA 文件就是我们离线验证过的官方
+文件；没有因此触发升级或写入操作。
