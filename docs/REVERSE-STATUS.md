@@ -47,6 +47,14 @@ The tool deliberately validates the ZIP version, compression stream, expanded
 size, and CRC32.  This rejects the many accidental `PK\x03\x04` byte sequences
 inside ARM code.
 
+As a controlled repack test, `tools/patch_resource_experiment.py` flips one
+font byte while keeping the resource's expanded size, compressed size, ZIP
+offsets, and CRC metadata consistent.  The resulting local candidate has
+SHA-256 `6941be39567efba5f7a123f58ea21b9e2b35ad95b30bf0870df2d0246663a63b`.
+The container parser and ZIP CRC check both pass.  This is a structural test
+artifact only; it has not been sent to a band and is not claimed to pass the
+device's OTA verifier.
+
 ## Consequence for a flashable custom image
 
 We can now edit and rebuild resources locally, and we can inspect AP/boot
