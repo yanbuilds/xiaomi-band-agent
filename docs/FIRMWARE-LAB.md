@@ -88,6 +88,21 @@ The modulus fingerprint is identical across the 3.1.175 full image, the
 f4ffe419c16bc3554f7e2172021e6493aa6c2fc05580cd4fd820eac4a7fcc8a9
 ```
 
+The embedded NuttX build metadata also exposes the flash layout used by the
+image:
+
+```text
+CHIP=best1503
+FLASH_BASE=0x2c000000
+FLASH_NC_BASE=0x28000000
+FLASH_SIZE=0x800000
+OTA_CODE_OFFSET=0x80000
+```
+
+These values are useful for mapping a carved payload in Ghidra, but they are
+not permission to write arbitrary bytes to those addresses. The updater still
+performs the signature check before `flash_ap`/`flash_bl2` writes.
+
 Both full images and the 3.1.175→3.1.190 incremental image contain the
 `ENDSLEY/BSDIFF50` implementation strings. The incremental package therefore
 contains a BSDIFF-style patch path in addition to the outer vendor container;
