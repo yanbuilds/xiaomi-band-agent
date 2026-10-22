@@ -2,15 +2,15 @@
   "source_commit": "f3dd7bd036011dada9f140c8dbc698f1499e71ac",
   "source_sha256": "ea5608647aabf6664da33dac9e484d1bc37248a359be7a0dc73e46440de0700b",
   "constants": {
-    "BAUD": null,
-    "FLASH_BASE": null,
-    "FLASH_SIZE": null,
-    "FLASH_BUFFER_SIZE": null,
-    "CHUNK_SIZE": null,
-    "PROG_HDR": null,
-    "PROG_CRC_OFF": null
+    "FLASH_BUFFER_SIZE": "0x8000",
+    "BAUD": "921600",
+    "PROG_HDR": "0x620",
+    "PROG_CRC_OFF": "0x61C",
+    "FLASH_BASE": "0x28000000",
+    "FLASH_SIZE": "0x400000",
+    "CHUNK_SIZE": "0x1000"
   },
   "programmer_size": 114488,
   "n67cn_known_flash": "GD5F2GM7REYIG 256 MiB SPI-NAND (from project hardware evidence)",
   "assessment": "static lead only; not n67cn Pro compatibility"
-}
+}\n
