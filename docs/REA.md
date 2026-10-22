@@ -1,6 +1,6 @@
 # REA integration
 
-[REA](https://github.com/morluto/rea) is useful as an analysis orchestrator,
+[REA](https://github.com/RMWS1001/REA) is useful as an analysis orchestrator,
 not as a flashing authority. Its firmware workflow can hand regions to
 Binwalk/Unblob and then to Ghidra, while its Android workflow can inspect the
 Mi Fitness APK and capture authorized device behavior.
@@ -29,6 +29,9 @@ The expected investigation order is:
    modification.
 
 REA does not bypass Xiaomi signatures or make a modified image flashable. A
-   successful static extraction is evidence for analysis only. Flash testing
+successful static extraction is evidence for analysis only. The current REA
+firmware lane delegates to caller-supplied Binwalk/Unblob on Linux; it does not
+know the n67cn Vela container format and does not provide a BES2700 raw-flash
+profile. Flash testing
    must use an unmodified, model-matched package first and retain a recovery
    path.

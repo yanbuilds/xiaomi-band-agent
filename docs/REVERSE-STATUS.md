@@ -91,6 +91,14 @@ also present in the OTA code's read-only data.  This is why the resource-only
 repack is useful as a format experiment but cannot yet be called an unlocked
 firmware image.
 
+In the extracted 3.1.190 `vela_ota` component, the updater's own strings are
+at stable offsets: `/dev/flash_ap` at `0x8041a`, `/dev/flash_bl2` at
+`0x8046c`, `sign verify error` at `0x802aa`, `verify start` at `0x8039f`,
+and `verify ok` at `0x803e0`.  The updater also contains the explicit
+`rsaEncryption`, `sha256WithRSAEncryption`, and `RSASSA-PSS` algorithm names.
+These offsets are static evidence for the verification path; they are not a
+signature bypass or a writable bootloader entry point.
+
 ## Reproducible extraction
 
 The outer image is not a ZIP by itself.  Its 92-byte header gives the exact
