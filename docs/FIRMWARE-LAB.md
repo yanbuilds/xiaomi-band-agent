@@ -70,6 +70,12 @@ sign verify error(%d)
 ota_upgrade_target
 ```
 
+The image also embeds certificate/crypto string tables including RSA, EC
+public keys, SHA-256/SHA-512, RSASSA-PSS, and the X.509 code-signing usage OID.
+These strings alone do not reveal the vendor private key, but they strongly
+support the conclusion that the updater verifies a signed package rather than
+only checking a filename or CRC.
+
 This establishes that the normal update path can write both the AP and the
 second-stage bootloader, and that CRC/signature checks happen before or during
 that path. A modified AP or bootloader is therefore not a safe first target.
