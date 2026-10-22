@@ -39,6 +39,19 @@ the RPK installer.  The phone-side bridge must retain the package fingerprint
 announced by the band; inventing a fingerprint causes the app to remain in
 `TIMEOUT`.
 
+For a first smoke test, with the phone connected to ADB, use:
+
+```powershell
+python tools/send_band_question.py --dry-run `
+  --text "是否收到消息？" --option "收到" --option "重试"
+
+python tools/send_band_question.py `
+  --text "是否收到消息？" --option "收到" --option "重试"
+```
+
+The first command prints the exact broadcast without sending it. The second
+asks the patched Gadgetbridge interconnect bridge to deliver it to the RPK.
+
 ## Scope
 
 This is an installable app package, not a replacement AP/bootloader image. It
