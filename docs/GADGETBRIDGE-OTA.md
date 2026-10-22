@@ -19,8 +19,9 @@ upload service unchanged.
 The patch changes only `parseAsFirmware()`.  A source diff audit confirms that
 the MD5 calculation, `TYPE_FIRMWARE = 0x20`, size field, resume offset, chunk
 header, and CRC32 code are untouched.  The local fork's `git apply --check` and
-`git diff --check` both pass.  Full Gradle compilation still requires the
-Gradle 9.5.1 distribution, which is not cached in this environment.
+`git diff --check` both pass.  With Android SDK Platform 36.1 installed, the
+local fork now completes `:app:compileMainlineDebugJavaWithJavac` successfully
+under Gradle 9.5.1 (35 tasks, all successful/up-to-date).
 
 Use the generated OTA JSON manifest to log the same version and MD5 that are
 sent in the protobuf request.  Test with an unmodified official image first;
