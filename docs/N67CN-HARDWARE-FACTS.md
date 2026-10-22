@@ -17,6 +17,14 @@ nandflash_erase_block
 nandflash_get_size
 ```
 
+For planning a future reader, the GD5F2GM7 datasheet specifies a nominal
+2-Gbit device with 2,048-byte pages and internal-ECC page storage of 2,048 +
+64 bytes.  The conservative model used by
+`tools/n67cn_nand_geometry.py` is 64 pages per 128-KiB erase block and 2,048
+nominal blocks.  These values are not yet a writer specification: the actual
+device must be read first to confirm OOB layout, ECC mode, bad-block markers,
+and any vendor-reserved blocks.  See the [official GigaDevice datasheet](https://download.gigadevice.com/Datasheet/DS-00820-GD5F2GM7UE-Rev1.5.pdf).
+
 This changes the flasher assessment substantially:
 
 - The ATC1441 ordinary-Band-9 flasher is documented for a 4-MB internal Flash
