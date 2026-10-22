@@ -1,0 +1,15 @@
+{
+  "image": "work\\firmware-lab\\n67cn_v3.1.190_full.bin",
+  "size": 50330500,
+  "sha256": "77174e6a39987ba6820796c3a20987c02fd3853fda0b85560bd5bddfad22deb4",
+  "eocd_offset": 50330210,
+  "archive_end": 50330232,
+  "trailer_size": 268,
+  "member_crc32": "61f7c4b3",
+  "signature_metadata": "5f4657fa",
+  "trailer_magic": "805a5a7e",
+  "signed_sha256": "de85f2f9b2829c0bca0ec1c9116cc1d88760df2cbfe976a2e8936ab340d68074",
+  "signature_verified": true,
+  "error": null,
+  "warning": "Verification proves the supplied public key matches this image; it does not recover a private signing key."
+}

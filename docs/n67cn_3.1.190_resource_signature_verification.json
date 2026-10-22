@@ -1,0 +1,15 @@
+{
+  "image": "work\\firmware-lab\\n67cn_v3.1.190_font-rebuilt.bin",
+  "size": 50330500,
+  "sha256": "6941be39567efba5f7a123f58ea21b9e2b35ad95b30bf0870df2d0246663a63b",
+  "eocd_offset": 50330210,
+  "archive_end": 50330232,
+  "trailer_size": 268,
+  "member_crc32": "61f7c4b3",
+  "signature_metadata": "5f4657fa",
+  "trailer_magic": "805a5a7e",
+  "signed_sha256": "03132165e4f3cd31fb9f653e66c67301de9e5b737773e1dad98fd0f97d0d9cce",
+  "signature_verified": false,
+  "error": "InvalidSignature",
+  "warning": "Verification proves the supplied public key matches this image; it does not recover a private signing key."
+}

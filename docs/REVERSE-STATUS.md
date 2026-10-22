@@ -128,6 +128,26 @@ The ATC1441 Band 10 Pro issue reports an AOSP test-key/AVB arrangement for
 that different model; it cannot be transferred to `miwear.watch.n67cn`
 without matching the Pro image's own key and verifier.
 
+### Recovered n67cn outer signature layout
+
+The official 3.1.175 and 3.1.190 images now verify offline with the embedded
+2048-bit public key. The final 268 bytes are:
+
+```text
+offset +0x00  uint32 little-endian CRC32 of the final ZIP member
+offset +0x04  uint32 signature metadata
+offset +0x08  256-byte RSA-2048 PKCS#1 v1.5 / SHA-256 signature
+offset +0x108 uint32 magic 0x805a5a7e (big-endian display)
+```
+
+The signed message is exactly `image[:archive_end] + trailer[:8]`, where
+`archive_end` is the final ZIP EOCD end. `tools/verify_n67cn_outer_signature.py`
+reports `signature_verified: true` for both official images. The same check
+returns `InvalidSignature` for `n67cn_v3.1.190_font-rebuilt.bin` after its
+single font-byte change. This is direct cryptographic proof that the
+resource-only candidate cannot be a valid n67cn firmware package without the
+vendor private key.
+
 For the live acceptance harness, the newly reviewed
 [MiWearBridge](https://github.com/batareya16/MiWearBridge) can hook Mi Fitness
 with LSPosed, install RPK/firmware files, announce the companion app online,
