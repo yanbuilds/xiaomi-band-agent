@@ -69,3 +69,18 @@ target version = 3.1.190
 
 这份验收不会修改启动区，也不会尝试擦除 Flash；任何 bootloader/AP 改写都必须另有
 可恢复的 UART/SecondStage 路径和完整备份。
+
+## 离线基线
+
+完整镜像资源实验版也保存在实验目录中：
+
+```text
+work/firmware-lab/n67cn_v3.1.190_font-rebuilt.bin
+size   = 50330500
+sha256 = 6941be39567efba5f7a123f58ea21b9e2b35ad95b30bf0870df2d0246663a63b
+```
+
+相对官方 `3.1.190_full.bin`，该文件只改变一个同尺寸归档：
+`MiSansF-Demibold.ttf`，归档大小仍为 14,167 字节，CRC 从
+`61f7c4b3` 变为 `9b07acd4`。`tools/validate_resource_candidate.py` 已报告
+`errors: []`。这证明了可重复的资源级修改基线，但不证明设备会接受厂商签名。
