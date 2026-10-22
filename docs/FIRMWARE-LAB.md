@@ -51,6 +51,32 @@ The REA workflow and commands are documented in [REA.md](./REA.md). The
 project keeps the local Python inspectors because they produce reproducible
 reports even when external reverse-engineering providers are unavailable.
 
+## New findings from AstroBox and the 9 Pro image
+
+AstroBox's public Xiaomi core recognizes this format by the `\x60ZZ~` factory
+header, a 32-byte version/`CONBINE_` descriptor, the `vela_ap.bin` marker, and
+multiple ZIP local headers. The 9 Pro images satisfy those checks.
+
+The 3.1.190 image also contains update-path strings for:
+
+```text
+/dev/flash_ap
+/dev/flash_bl2
+vela_ap.bin
+vela_bl2.bin
+verify start...
+verify ok!
+sign verify error(%d)
+ota_upgrade_target
+```
+
+This establishes that the normal update path can write both the AP and the
+second-stage bootloader, and that CRC/signature checks happen before or during
+that path. A modified AP or bootloader is therefore not a safe first target.
+The project will prioritize signed RPK/resource installation and the existing
+third-party app/interconnect messages, then use firmware research to understand
+the verifier rather than attempting to bypass it.
+
 ## Flashing gate
 
 Before any write operation we need a verified device backup, the exact model
