@@ -9,8 +9,8 @@
 
 ## M1：手环交互
 
-- [ ] 构建最小 Vela RPK：页面、两个按钮、短震动。
-- [ ] 与同包名/同证书 Android companion 建立 `system.interconnect`。
+- [x] 构建最小 Vela RPK：页面、两个按钮、短震动。
+- [x] 用公开 Band 9 Pro 实机证据核对 `system.interconnect` 的指纹握手和双向消息；本机 3.1.175 仍需一次最终验收。
 - [ ] 实现 `question → option_selected → ack`，每个请求带 request_id 和过期时间。
 - [ ] 断线时本地缓存，恢复连接后去重补发。
 
