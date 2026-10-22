@@ -18,6 +18,12 @@ in the extracted `vela_bl2.bin` and `vela_ota` components. The AT vocabulary is
 therefore an AP-side factory/diagnostic surface, not a bootloader command
 table. It cannot by itself bypass the BL2/OTA signature gate.
 
+The AP also contains response strings such as `OTA_UPDATE=OK`, `OTA_USR =
+ERROR`, `JUMP=OK`, `REBOOT=OK`, and `NEW_FILE=OK`. These are useful markers for
+offline disassembly and later passive log matching, but they are not evidence
+that a retail unit accepts the commands or that a successful response means a
+modified image passed signature verification.
+
 This is useful evidence for locating the factory command dispatcher during
 future disassembly. It is not an unlocked interface: a string table does not
 show which transport reaches the parser, whether a session is authenticated,
