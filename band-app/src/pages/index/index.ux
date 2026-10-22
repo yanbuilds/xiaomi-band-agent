@@ -2,20 +2,73 @@
   <div class="page">
     <text class="title">{{ request.title || 'Band Agent' }}</text>
     <text class="body">{{ request.text || '等待手机消息' }}</text>
-    <list if="request.options">
-      <list-item for="option in request.options" class="option" onclick="choose(option.id)">
-        <text>{{ option.text }}</text>
-      </list-item>
-    </list>
+    <div for="{{request.options}}" class="option" onclick="choose($item.id)">
+      <text>{{ $item.text }}</text>
+    </div>
     <text class="status">{{ status }}</text>
   </div>
 </template>
 
 <style>
-.page { flex-direction: column; padding: 22px; background-color: #000000; }
+.page { flex-direction: column; padding: 18px; background-color: #000000; }
 .title { color: #ffffff; font-size: 25px; font-weight: bold; margin-bottom: 16px; }
-.body { color: #dddddd; font-size: 19px; margin-bottom: 20px; }
-.option { height: 58px; margin-bottom: 10px; padding: 16px; background-color: #202020; border-radius: 10px; }
+.body { color: #dddddd; font-size: 19px; margin-bottom: 18px; lines: 4; }
+.option { height: 54px; margin-bottom: 9px; padding: 14px; background-color: #202020; border-radius: 10px; }
 .option text { color: #ffffff; font-size: 18px; }
 .status { color: #8ed1fc; font-size: 15px; margin-top: 16px; }
 </style>
+
+<script>
+  import interconnect from '@system.interconnect'
+  import vibrator from '@system.vibrator'
+  import storage from '@system.storage'
+
+  function unwrap(event) {
+    if (event && typeof event.data === 'string') return event.data
+    if (event && event.data && typeof event.data.data === 'string') return event.data.data
+    return ''
+  }
+
+  export default {
+    private: { request: {}, status: '连接中…', connect: null },
+
+    onShow() {
+      const conn = interconnect.instance()
+      this.connect = conn
+      this.status = conn.getApkStatus()
+      conn.onmessage = (event) => {
+        try {
+          const message = JSON.parse(unwrap(event))
+          if (message.type === 'question') {
+            this.request = message
+            this.status = '请选择'
+            storage.set({ key: 'last_question', value: JSON.stringify(message) })
+            try { vibrator.vibrate({ mode: 'short' }) } catch (_) {}
+          } else if (message.type === 'ack') {
+            this.status = message.text || '已提交'
+          }
+        } catch (_) {
+          this.status = '消息格式错误'
+        }
+      }
+      conn.onclose = () => { this.status = '连接断开' }
+      storage.get({ key: 'last_question', success: (value) => {
+        if (value) {
+          try { this.request = JSON.parse(value) } catch (_) {}
+        }
+      } })
+    },
+
+    choose(optionId) {
+      if (!this.request || !this.request.request_id || !this.connect) return
+      this.status = '正在提交…'
+      try { vibrator.vibrate({ mode: 'short' }) } catch (_) {}
+      // The interconnect API wraps watch -> phone data as {"data":"…"}.
+      this.connect.send({ data: { data: JSON.stringify({
+        type: 'option_selected',
+        request_id: this.request.request_id,
+        option_id: optionId
+      }) } })
+    }
+  }
+</script>

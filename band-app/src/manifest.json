@@ -3,7 +3,7 @@
   "name": "Band Agent",
   "versionName": "0.1.0",
   "versionCode": 1,
-  "minPlatformVersion": 1000,
+  "minPlatformVersion": 1200,
   "icon": "/common/icon.png",
   "deviceTypeList": ["watch"],
   "features": [
@@ -12,7 +12,7 @@
     {"name": "system.interconnect"},
     {"name": "system.vibrator"}
   ],
-  "config": {"logLevel": "off", "designWidth": 480},
+  "config": {"logLevel": "debug", "designWidth": 336, "debug": true},
   "router": {
     "entry": "pages/index",
     "pages": {"pages/index": {"component": "index", "launchMode": "singleTask"}}

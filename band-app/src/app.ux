@@ -1,37 +1,7 @@
 <script>
-import interconnect from '@system.interconnect'
-import vibrator from '@system.vibrator'
-import storage from '@system.storage'
-
-export default {
-  onCreate() {
-    const conn = interconnect.instance()
-    this.data.conn = conn
-    conn.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data)
-        if (message.type === 'question') {
-          this.data.request = message
-          this.data.status = 'new'
-          vibrator.vibrate({ mode: 'short' })
-        } else if (message.type === 'ack') {
-          this.data.status = message.text || '已收到'
-        }
-      } catch (_) {
-        this.data.status = '消息格式错误'
-      }
+  export default {
+    onError(err) {
+      console.log('Band Agent error: ' + (err && err.message))
     }
-    storage.get({ key: 'last_question', success: (value) => {
-      if (value) this.data.request = JSON.parse(value)
-    } })
-  },
-  choose(option) {
-    const request = this.data.request
-    if (!request || !request.request_id) return
-    this.data.status = '正在提交…'
-    this.data.conn.send({ data: JSON.stringify({
-      type: 'option_selected', request_id: request.request_id, option_id: option
-    }) })
   }
-}
 </script>

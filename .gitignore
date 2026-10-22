@@ -9,3 +9,9 @@ local-secrets/
 *.jks
 *.keystore
 outputs/band9pro-mvp/.venv/
+
+band-app/node_modules/
+band-app/build/
+band-app/dist/
+band-app/.temp/
+
