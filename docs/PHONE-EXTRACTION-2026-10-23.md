@@ -28,3 +28,8 @@ This is useful protocol evidence, but it is not an extracted auth key. The APK i
 ## Safe next step
 
 Use the SPP transport path as the primary implementation target and instrument only our own debug build or a user-authorized rooted test device if key extraction is still required. Do not attempt to brute-force, patch, or flash the bootloader. The direct BLE V2 probe remains a separate experiment and currently receives authentication status 4 from firmware 3.1.175.
+
+For a user-authorized, shared-storage-only copy of the logs, use
+`tools/pull_mifitness_logs_safe.ps1`. It defaults to a dry-run and writes only
+to ignored `work/` when `-Pull` is supplied; it never reads `/data/user/0`,
+prints credentials, or modifies the phone.
