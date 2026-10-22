@@ -373,3 +373,23 @@ SecondStage/UART command table or n67cn test-pad mapping. We therefore do not
 turn these strings into a flashing procedure without a physical board capture:
 the next evidence required is a powered-off board photo and a read-only UART
 probe on confirmed test pads.
+
+## Embedded rom1fs and n67cn boot flow
+
+`tools/extract_n67cn_romfs.py` now extracts the big-endian `rom1fs` embedded
+in the 3.1.190 AP and BL2 components. The AP volume is 225,712 bytes and
+contains `/init.d/rc.sysinit` and `/init.d/rcS`. The scripts mount
+`/dev/nand_system` read-only and `/dev/nand_data` with `autoformat`, then start
+the normal MiWear services; they contain no recovery or public UART command.
+
+The BL2 volume is only 336 bytes and its `rcS` is just `bl &`; the actual OTA
+state machine is compiled into BL2. Its strings show `/data/ota/b283_ota.bin`,
+`/dev/flash_ota`, OTA progress assets, `sign verify start/ok/failed`, and
+`/data/ota/vela_ota.bin`. This matches the general NuttX boot structure
+described for the related BES2700iMP Band 10 Pro, where BL2 selects normal,
+recovery, or factory execution and verifies the OTA loader before flashing.
+The n67cn build has its own Vela signature path, so the related article is
+useful for control-flow comparison but does not establish a bypass for n67cn.
+
+The extracted scripts and the absence of an unprotected recovery command are
+now recorded as evidence; no modified BL2 is emitted for device use.
