@@ -100,6 +100,10 @@ python tools/firmware_container.py work/firmware-lab/n67cn_v3.1.190_full.bin \
   --extract-payload work/firmware-lab/n67cn_v3.1.190.payload
 ```
 
+`tools/firmware_roundtrip.py` provides the packaging baseline. It currently
+only performs a byte-identical copy and refuses any mismatch; this prevents a
+resource patch experiment from being mistaken for a valid flashable package.
+
 ## Flashing gate
 
 Before any write operation we need a verified device backup, the exact model
