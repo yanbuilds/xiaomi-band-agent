@@ -127,3 +127,8 @@ python tools/append_incremental_archive.py `
 为 `6831f9951c1ab184a43eb39b5fe2af9dacbc983462848a8253037aae11adf6fd`。
 新版负控制候选保留了 268 字节尾部，但 RSA 签名明确无效；这两个文件都不应
 被标记为已验证可刷入。
+
+The full-set incremental candidate was run through OTA preflight from the
+current 3.1.175 version. Container, MD5, SHA-256, and version ordering all pass,
+but RSA verification fails (`ValueError`), so `send_allowed_by_preflight=false`.
+The safety gate therefore refuses the candidate before any device write.
