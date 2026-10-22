@@ -76,6 +76,13 @@ These strings alone do not reveal the vendor private key, but they strongly
 support the conclusion that the updater verifies a signed package rather than
 only checking a filename or CRC.
 
+Both full images and the 3.1.175→3.1.190 incremental image contain the
+`ENDSLEY/BSDIFF50` implementation strings. The incremental package therefore
+contains a BSDIFF-style patch path in addition to the outer vendor container;
+it is not a plain byte-for-byte replacement image. The full images also contain
+`RPK` markers in their resource data, which is useful for locating quick-app
+related metadata but is not evidence that the AP itself can load unsigned code.
+
 This establishes that the normal update path can write both the AP and the
 second-stage bootloader, and that CRC/signature checks happen before or during
 that path. A modified AP or bootloader is therefore not a safe first target.
