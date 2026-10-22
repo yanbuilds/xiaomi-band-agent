@@ -90,3 +90,21 @@ hardware before attempting any custom firmware. For the Grok interaction goal,
 the signed Quick App/RPK path remains the lower-risk deliverable because it
 already exercises the CN Band 9 Pro interconnect and vibration APIs.
 
+# FreeBand protocol cross-check
+
+The current `cobanov/freeband` source is useful for the phone-side protocol,
+even though it targets Band 10/10 Pro on iOS. Its documented and tested path
+matches the protocol artifacts in this repository: service `FE95`, notify
+characteristic `005E`, write characteristic `005F`, 16-byte auth key, HKDF
+SHA-256 with info `miwear-auth`, AES-CCM for the authentication introduction,
+then AES-128-CTR protobuf frames with `A5 A5` framing and CRC16. It also has a
+working notification command and activity-file list/fetch flow, and explicitly
+avoids file acknowledgement while preserving raw files.
+
+The implementation is not copied wholesale into Android: FreeBand's Swift
+BLE lifecycle and Band 10 command map still require validation against the
+China Band 9 Pro's Gadgetbridge transport. We use it as an independent
+cross-check for crypto/frame vectors and as the reference for activity-file
+parsing; the Android Bluetooth owner remains the Sany18/Gadgetbridge Xiaomi
+service. Source: [FreeBand](https://github.com/cobanov/freeband).
+
