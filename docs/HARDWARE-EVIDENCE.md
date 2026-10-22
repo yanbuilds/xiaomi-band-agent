@@ -18,3 +18,9 @@ Pro” as an open issue, with no published pad map or working dump procedure:
 [atc1441 issue #4](https://github.com/atc1441/MiBand10-BES2700iMP-BEST1503-Hacking/issues/4).
 The issue remains open with no maintainer reply as checked on 2026-10-23, so it
 does not provide a usable UART route for the current unit.
+
+The same repository now contains a working BEST1503 UART flasher, but its
+published pinout/photo and 4 MiB NOR constants belong to the Band 10-tested
+setup (and an expected Band 9 family port). They are not evidence for the
+`n67cn` Pro board's 256 MiB NAND wiring. The flasher is therefore kept as a
+read-only research dependency, not a write procedure for this device.
