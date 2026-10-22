@@ -115,6 +115,14 @@ the public OpenVela APK-signing container at the outer level.  The tail and
 the `vela_ota` verifier still need a device/log or deeper disassembly to map;
 absence of a public marker is not evidence that it is unsigned.
 
+For the live acceptance harness, the newly reviewed
+[MiWearBridge](https://github.com/batareya16/MiWearBridge) can hook Mi Fitness
+with LSPosed, install RPK/firmware files, announce the companion app online,
+and pull device logs.  It requires a rooted Android phone and matching RPK/app
+certificates; it improves the sender and evidence collection but does not
+remove the n67cn signature check.  The staged procedure is in
+`docs/MIWEARBRIDGE-ROUTE.md`.
+
 ## Reproducible extraction
 
 The outer image is not a ZIP by itself.  Its 92-byte header gives the exact
