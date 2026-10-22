@@ -110,6 +110,20 @@ it updates ZIP CRC fields but does not and cannot update the vendor firmware
 signature. The output must never be sent to a device without a verified
 signature and recovery path.
 
+The experiment succeeded structurally against the 3.1.190 font resource:
+
+```text
+entry:          MiSansF-Demibold.ttf
+decompressed:   22616 bytes (unchanged)
+compressed:     13977 bytes (unchanged)
+CRC32:          61f7c4b3 → 9b07acd4
+zip.testzip():  passed
+```
+
+This proves an equal-size resource replacement can preserve the outer offsets
+and ZIP layout. It does **not** prove the device accepts the package: the
+vendor signature still needs to be validated by the actual updater.
+
 ## Flashing gate
 
 Before any write operation we need a verified device backup, the exact model
