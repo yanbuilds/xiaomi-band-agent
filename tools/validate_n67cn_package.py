@@ -17,6 +17,18 @@ def validate(path: Path) -> dict:
     data = path.read_bytes()
     archives = index(path)
     errors: list[str] = []
+    if data[:4] != b"`ZZ~":
+        errors.append("missing outer Vela magic")
+    header = {
+        "version": data[4:12].split(b"\0", 1)[0].decode("ascii", "replace")
+        if len(data) >= 12 else "",
+        "mode": int.from_bytes(data[0x48:0x4C], "little")
+        if len(data) >= 0x4C else None,
+        "table_offset": int.from_bytes(data[0x50:0x54], "little")
+        if len(data) >= 0x54 else None,
+        "payload_offset": int.from_bytes(data[0x54:0x58], "little")
+        if len(data) >= 0x58 else None,
+    }
     version = ""
     file_num = None
     file_size = None
@@ -39,12 +51,17 @@ def validate(path: Path) -> dict:
                     file_size = int(fields.get("file_size", "-1"))
         except (OSError, ValueError, zipfile.BadZipFile, KeyError) as exc:
             errors.append(f"{item['start']:#x}: {exc}")
-    if file_num is not None and file_num != len(archives):
-        errors.append(f"version.ini file_num={file_num}, archives={len(archives)}")
+    if file_num is not None:
+        mode = header["mode"]
+        if mode == 0 and file_num != len(archives):
+            errors.append(f"full image file_num={file_num}, archives={len(archives)}")
+        if mode == 2 and file_num < len(archives):
+            errors.append(f"incremental file_num={file_num} smaller than archives={len(archives)}")
     result = {
         "path": str(path),
         "size": len(data),
         "archives": len(archives),
+        "outer_header": header,
         "version": version,
         "declared_file_num": file_num,
         "declared_uncompressed_file_size": file_size,
