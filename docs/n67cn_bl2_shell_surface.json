@@ -1,0 +1,256 @@
+{
+  "image": "work\\firmware-lab\\carved190\\vela_bl2.bin",
+  "read_only": true,
+  "interpretation": [
+    "BL2 contains an NuttX NSH prompt and flash device names.",
+    "These strings establish an observable bootloader shell surface only.",
+    "They do not prove UART/USB access on an assembled Band 9 Pro.",
+    "They do not bypass the RSA signature gate used by the OTA path."
+  ],
+  "matches": [
+    {
+      "offset": "0x9fed",
+      "text": "DRVUSB"
+    },
+    {
+      "offset": "0xa0c5",
+      "text": "ESHELL"
+    },
+    {
+      "offset": "0xa2b5",
+      "text": "Pmu charger in change to reboot"
+    },
+    {
+      "offset": "0xae09",
+      "text": "norflash_api_mutex_id"
+    },
+    {
+      "offset": "0xae1f",
+      "text": "_norflash_api_mutex_init"
+    },
+    {
+      "offset": "0xae38",
+      "text": "norflash_api_init"
+    },
+    {
+      "offset": "0xae7e",
+      "text": "NORFLASH_API_MUTEX"
+    },
+    {
+      "offset": "0x3da3e",
+      "text": "/dev/console"
+    },
+    {
+      "offset": "0x404bb",
+      "text": "Address"
+    },
+    {
+      "offset": "0x404e4",
+      "text": "Total Size"
+    },
+    {
+      "offset": "0x404ef",
+      "text": "Total Blks"
+    },
+    {
+      "offset": "0x4054d",
+      "text": "total"
+    },
+    {
+      "offset": "0x40842",
+      "text": "/dev/bes_flash"
+    },
+    {
+      "offset": "0x4085c",
+      "text": "flash_bl"
+    },
+    {
+      "offset": "0x408d0",
+      "text": "flash_bl2"
+    },
+    {
+      "offset": "0x40944",
+      "text": "flash_config"
+    },
+    {
+      "offset": "0x409b8",
+      "text": "flash_ap"
+    },
+    {
+      "offset": "0x40a2c",
+      "text": "bes_reserved"
+    },
+    {
+      "offset": "0x40f9b",
+      "text": "bl2> "
+    },
+    {
+      "offset": "0x4123f",
+      "text": "reboot"
+    },
+    {
+      "offset": "0x41246",
+      "text": "resetcause"
+    },
+    {
+      "offset": "0x414cc",
+      "text": "dd_verify"
+    },
+    {
+      "offset": "0x41643",
+      "text": "boardctl"
+    },
+    {
+      "offset": "0x41679",
+      "text": "bootloader"
+    },
+    {
+      "offset": "0x41684",
+      "text": "recovery"
+    },
+    {
+      "offset": "0x4168d",
+      "text": "factory"
+    },
+    {
+      "offset": "0x41c78",
+      "text": "/dev/flash_ap"
+    },
+    {
+      "offset": "0x41c92",
+      "text": "/system/app/vela_factory.bin"
+    },
+    {
+      "offset": "0x41cb4",
+      "text": "Factory"
+    },
+    {
+      "offset": "0x41cbc",
+      "text": "/data/ota/b283_ota.bin"
+    },
+    {
+      "offset": "0x41cd3",
+      "text": "/dev/flash_ota"
+    },
+    {
+      "offset": "0x42170",
+      "text": "/system/image/ota/update_ok_en.bin"
+    },
+    {
+      "offset": "0x42193",
+      "text": "/system/image/ota/update_ok_zh.bin"
+    },
+    {
+      "offset": "0x421b6",
+      "text": "/system/image/ota/updateing_en.bin"
+    },
+    {
+      "offset": "0x421d9",
+      "text": "/system/image/ota/updateing_zh.bin"
+    },
+    {
+      "offset": "0x422e0",
+      "text": "/system/image/ota/percent.bin"
+    },
+    {
+      "offset": "0x422fe",
+      "text": "/system/image/ota/num1.bin"
+    },
+    {
+      "offset": "0x42319",
+      "text": "/system/image/ota/num0.bin"
+    },
+    {
+      "offset": "0x42387",
+      "text": "ota_gui"
+    },
+    {
+      "offset": "0x4238f",
+      "text": "/system/image/ota/num2.bin"
+    },
+    {
+      "offset": "0x423aa",
+      "text": "/system/image/ota/num3.bin"
+    },
+    {
+      "offset": "0x423c5",
+      "text": "/system/image/ota/num4.bin"
+    },
+    {
+      "offset": "0x423e0",
+      "text": "/system/image/ota/num5.bin"
+    },
+    {
+      "offset": "0x423fb",
+      "text": "/system/image/ota/num6.bin"
+    },
+    {
+      "offset": "0x42416",
+      "text": "/system/image/ota/num7.bin"
+    },
+    {
+      "offset": "0x42431",
+      "text": "/system/image/ota/num8.bin"
+    },
+    {
+      "offset": "0x4244c",
+      "text": "/system/image/ota/num9.bin"
+    },
+    {
+      "offset": "0x42db0",
+      "text": "/dev/flash_bl2"
+    },
+    {
+      "offset": "0x460de",
+      "text": "id < REBOOT_PARAM_ID_QTY"
+    },
+    {
+      "offset": "0x460f7",
+      "text": "reboot_param_clear"
+    },
+    {
+      "offset": "0x4610a",
+      "text": "reboot_param_set"
+    },
+    {
+      "offset": "0x4649a",
+      "text": "nandflash_block_is_bad"
+    },
+    {
+      "offset": "0x46b43",
+      "text": "hal_dma_get_cur_dst_addr"
+    },
+    {
+      "offset": "0x46f64",
+      "text": "i2c err : HAL_I2C_ERRCODE_10ADDR2_NOACK"
+    },
+    {
+      "offset": "0x46f8c",
+      "text": "i2c err : HAL_I2C_ERRCODE_10ADDR1_NOACK"
+    },
+    {
+      "offset": "0x46fb4",
+      "text": "i2c err : HAL_I2C_ERRCODE_7B_ADDR_NOACK"
+    },
+    {
+      "offset": "0x479cf",
+      "text": "hal_uart_get_dma_recv_addr"
+    },
+    {
+      "offset": "0x47d54",
+      "text": "Please change the FLASH_SIZE in common.mk to 0x%X to enable the OTA feature."
+    },
+    {
+      "offset": "0x4825d",
+      "text": "/data/ota"
+    },
+    {
+      "offset": "0x4826c",
+      "text": "/data/ota/ota_temp.bin"
+    },
+    {
+      "offset": "0x48610",
+      "text": "/data/ota/vela_ota.bin"
+    }
+  ]
+}
