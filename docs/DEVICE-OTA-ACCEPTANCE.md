@@ -151,3 +151,8 @@ The safety gate therefore refuses the candidate before any device write.
 `360cb9c46b3df3170d44fab8216996d2f53d7c14226d254027a485cf6aecbc7f`，与本地
 官方增量包完全一致。这证明手机实际使用的 OTA 文件就是我们离线验证过的官方
 文件；没有因此触发升级或写入操作。
+
+对手机端 Mi Fitness 传输日志继续进行脱敏计数扫描：官方包摘要出现 3 次，
+`sendAppVerify` 与 `sendAppConfirm` 各出现 12 次；没有出现 `PrepareOta`、
+签名失败或签名通过标记。这说明当前只是官方包已缓存并参与过普通认证日志，尚无
+证据表明 OTA 已经向手环发送或写入。
