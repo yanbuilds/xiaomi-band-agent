@@ -103,6 +103,24 @@ These values are useful for mapping a carved payload in Ghidra, but they are
 not permission to write arbitrary bytes to those addresses. The updater still
 performs the signature check before `flash_ap`/`flash_bl2` writes.
 
+The OTA code also names its staging files and verification phases:
+
+```text
+/data/ota/b283_ota.bin
+/data/ota/ota_temp.bin
+/data/ota/vela_ota.bin
+hash start
+sign head read error
+sign not find 0x%lx
+sign verify start
+sign verify ok
+sign verify failed
+```
+
+This gives us a concrete target for future captured updater logs: the missing
+piece is the signed `sign` header format and its coverage range, not the
+transport or flash addresses.
+
 Both full images and the 3.1.175→3.1.190 incremental image contain the
 `ENDSLEY/BSDIFF50` implementation strings. The incremental package therefore
 contains a BSDIFF-style patch path in addition to the outer vendor container;
