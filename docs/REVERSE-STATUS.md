@@ -113,6 +113,13 @@ LE)`.  `build_mass_firmware.py` reproduces and verifies this envelope.  The
 watch still performs its own OTA checks after receiving it; an envelope that
 passes MD5/CRC is not a signature bypass.
 
+The public AstroBox source currently sends `PrepareOta` with the literal
+version `9.9.9`, then sends the selected image as `MassDataType::FIRMWARE`.
+That may be an intentional sentinel, but it is not proof that every firmware
+version accepts it.  A real test client should log the device's reported
+version, try the official image first, and preserve the same request fields
+before substituting the resource candidate.
+
 The same indexer finds a 9-archive 3.1.175→3.1.190 incremental package.  It
 contains the official AP, BL2 and factory blocks plus language/NFC resources.
 The patcher permits non-`.bin` members in this incremental form, while
