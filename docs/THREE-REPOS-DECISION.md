@@ -1,6 +1,10 @@
-# 三个仓库在 Band 9 Pro 项目中的边界
+# 相关开源仓库在 Band 9 Pro 项目中的边界
 
 更新时间：2026-10-22
+
+补充：2026-10-23 纳入只读参考项目
+[Wristload-Next](https://gitcode.com/pengchegnkai/Wristload-Next)。它报告了
+n67cn 的 RFCOMM/L1START/authkey/RPK 真机链路，但仍未开放固件 OTA 发送。
 
 ## 结论
 
@@ -22,6 +26,7 @@ Android bridge
 | [miband-mcp](https://github.com/kirisawa-subaru/miband-mcp) | USB/ADB、Gadgetbridge 数据导出、MCP 和 agent 配置 | 可直接复用数据编排与 Agent 接口 | 当前公开验收范围是 Band 10 + Android + Gadgetbridge + Linux/macOS；不是刷机工具 |
 | [ATC1441/BES2700iMP](https://github.com/atc1441/MiBand10-BES2700iMP-BEST1503-Hacking) | BEST1503 SDK、串口烧录器、Mi Band 10 硬件 bring-up | 可用来研究同 SoC 的启动、显示和 UART 工具链 | 作者明确写明只在 Band 10 测试；9 Pro 的测试点、分区和显示参数仍未证实 |
 | [FreeBand](https://github.com/cobanov/freeband) | BLE V2、HKDF/HMAC、AES-CTR、活动文件和通知/震动能力 | 可把 iOS 逆向结果迁移到 Android bridge | Band 10/10 Pro 的实测不能自动证明 n67cn 9 Pro 兼容 |
+| [Wristload-Next](https://gitcode.com/pengchegnkai/Wristload-Next) | n67cn RFCOMM、L1START、authkey、表盘/RPK Mass 传输 | 独立交叉验证 Classic SPP，并可作为 RPK 安装参考 | OTA 通道仍只做取证，未提供自定义固件刷写 |
 
 ## 为什么现在不能提交“可刷入的自制包”
 
