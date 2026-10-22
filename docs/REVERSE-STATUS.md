@@ -107,6 +107,11 @@ signature policy will accept that resource change.
 CRC values, and verifies that `version.ini` reports the actual archive count.
 Both the official 3.1.190 image and the resource candidate pass these checks.
 
+`validate_resource_candidate.py` compares archive boundaries and member names,
+requires exactly one changed archive, and rejects changes to `vela_ap.bin`,
+`vela_bl.bin`, `vela_bl2.bin`, or `vela_factory.bin`.  Both the 3.1.175 and
+3.1.190 candidates pass this protected-component check.
+
 The AstroBox public sender wraps the image in a MiWear mass envelope before
 chunking it: `0x00 | 0x20(FIRMWARE) | MD5 | length(u32 LE) | image | CRC32(u32
 LE)`.  `build_mass_firmware.py` reproduces and verifies this envelope.  The
