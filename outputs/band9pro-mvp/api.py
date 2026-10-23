@@ -20,6 +20,7 @@ DB = os.environ.get('BAND_DB', 'band.sqlite3')
 def db():
     c = sqlite3.connect(DB, timeout=15)
     c.execute('CREATE TABLE IF NOT EXISTS events (id TEXT PRIMARY KEY, body TEXT NOT NULL, result TEXT, expires INTEGER, delivered INTEGER DEFAULT 0)')
+    c.execute('CREATE TABLE IF NOT EXISTS health_events (id TEXT PRIMARY KEY, body TEXT NOT NULL)')
     c.commit()
     return c
 
@@ -69,6 +70,33 @@ class Event(BaseModel):
     sleep: Sleep
 
 
+class HealthSample(BaseModel):
+    timestamp: int = Field(gt=0)
+    metric: Literal['heart_rate', 'steps', 'spo2']
+    value: float = Field(ge=0)
+    unit: Literal['bpm', 'count', 'percent']
+
+    @model_validator(mode='after')
+    def validate_metric(self):
+        limits = {
+            'heart_rate': ('bpm', 30, 260),
+            'steps': ('count', 0, 200000),
+            'spo2': ('percent', 50, 100),
+        }
+        unit, low, high = limits[self.metric]
+        if self.unit != unit or not low <= self.value <= high:
+            raise ValueError('metric value/unit out of range')
+        return self
+
+
+class HealthEvent(BaseModel):
+    schema_version: Literal[1]
+    device_id: str = Field(min_length=1, max_length=64)
+    event_id: str = Field(pattern=r'^[a-f0-9]{64}$')
+    source: dict
+    samples: list[HealthSample] = Field(min_length=1, max_length=20000)
+
+
 class Option(BaseModel):
     id: str = Field(min_length=1, max_length=32)
     text: str = Field(min_length=1, max_length=60)
@@ -95,6 +123,22 @@ def ingest(event: Event, authorization: str | None = Header(default=None)):
     return {'event_id': event.event_id, 'stored': True}
 
 
+@app.post('/v1/health')
+def ingest_health(event: HealthEvent, authorization: str | None = Header(default=None)):
+    authorize('PHONE', authorization)
+    body = json.dumps(event.model_dump(), sort_keys=True, ensure_ascii=False)
+    if len(body.encode()) > 512000:
+        raise HTTPException(413, 'event too large')
+    with closing(db()) as c, c:
+        c.execute('INSERT OR IGNORE INTO health_events(id,body) VALUES (?,?)',
+                  (event.event_id, body))
+        old = c.execute('SELECT body FROM health_events WHERE id=?',
+                        (event.event_id,)).fetchone()[0]
+        if old != body:
+            raise HTTPException(409, 'event ID reused with different data')
+    return {'event_id': event.event_id, 'stored': True}
+
+
 @app.get('/v1/agent/pending')
 def pending(authorization: str | None = Header(default=None),
             limit: int = Query(default=20, ge=1, le=20)):
@@ -102,6 +146,15 @@ def pending(authorization: str | None = Header(default=None),
     with closing(db()) as c:
         return [json.loads(r[0]) for r in c.execute(
             'SELECT body FROM events WHERE result IS NULL ORDER BY rowid LIMIT ?', (limit,))]
+
+
+@app.get('/v1/agent/health/pending')
+def health_pending(authorization: str | None = Header(default=None),
+                   limit: int = Query(default=20, ge=1, le=20)):
+    authorize('AGENT', authorization)
+    with closing(db()) as c:
+        return [json.loads(r[0]) for r in c.execute(
+            'SELECT body FROM health_events ORDER BY rowid LIMIT ?', (limit,))]
 
 
 @app.post('/v1/agent/results/{event_id}')

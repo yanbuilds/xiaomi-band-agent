@@ -54,6 +54,29 @@ class Tests(unittest.TestCase):
                 self.assertEqual(c.post('/v1/notifications/'+eid+'/submitted',headers=phone).status_code,200)
                 self.assertEqual(c.get('/v1/notifications',headers=phone).json(),[])
 
+    def test_health_samples_validation_and_idempotency(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            os.environ.update(PHONE_TOKEN='p'*32, AGENT_TOKEN='a'*32)
+            api = importlib.import_module('api'); api.DB = str(Path(tmp)/'health.db')
+            event = {
+                'schema_version': 1, 'device_id': 'band-local-1',
+                'event_id': 'b' * 64, 'source': {'parser': 'normalized-v1'},
+                'samples': [
+                    {'timestamp': 1792591200, 'metric': 'heart_rate', 'value': 72, 'unit': 'bpm'},
+                    {'timestamp': 1792591200, 'metric': 'steps', 'value': 1000, 'unit': 'count'},
+                    {'timestamp': 1792591200, 'metric': 'spo2', 'value': 98, 'unit': 'percent'},
+                ],
+            }
+            headers = {'Authorization': 'Bearer ' + 'p'*32}
+            with TestClient(api.app) as c:
+                self.assertEqual(c.post('/v1/health', json=event, headers=headers).status_code, 200)
+                self.assertEqual(c.post('/v1/health', json=event, headers=headers).status_code, 200)
+                bad = dict(event, event_id='c' * 64,
+                           samples=[{'timestamp': 1, 'metric': 'spo2', 'value': 20, 'unit': 'percent'}])
+                self.assertEqual(c.post('/v1/health', json=bad, headers=headers).status_code, 422)
+                agent = {'Authorization': 'Bearer ' + 'a'*32}
+                self.assertEqual(len(c.get('/v1/agent/health/pending', headers=agent).json()), 1)
+
     def test_webhook_signature_rejects_replay(self):
         body = b'{"event_id":"abc"}'
         headers = signed_headers(body, 's' * 32, 1000)
