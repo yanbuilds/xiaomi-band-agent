@@ -7,10 +7,11 @@
 [`band-app/`](../../band-app/)，协议和安装说明见
 [`docs/QUICKAPP-ROUTE.md`](../../docs/QUICKAPP-ROUTE.md)。
 
-交付范围：可运行的离线睡眠 v2 解析器、SQLite/FastAPI 单用户后端、自动化测试，
-以及需要集成进 Gadgetbridge 的 Java 适配源文件。不是已完成真机验证的 APK。
-尚未实现 Android 上传 Worker、配置界面、持久化 outbox 和 Agent 模型调用。
-Grok bot 通过下面的通用 API 接入，无须把蓝牙密钥交给模型。
+交付范围：可运行的离线睡眠 v2 解析器、SQLite/FastAPI 单用户后端、自动化测试、
+带 HMAC 防重放的 Grok/Webhook 适配器、Android Worker 编排边界，以及 RPK 和
+Gadgetbridge 适配源。`PhoneSyncCoordinator.kt` 由实际 Android 应用提供 HTTP
+实现后即可放进 WorkManager；它不会创建第二条蓝牙连接。Grok bot 通过通用 API
+接入，无须把蓝牙密钥交给模型。
 
 外部项目的职责划分见 [`docs/RESEARCH-TRIAGE.md`](../../docs/RESEARCH-TRIAGE.md)：
 `miband-mcp` 适合作为 Agent/SQLite 同步层参考，BEST1503 SDK 适合作为固件刷写
@@ -161,12 +162,24 @@ python sleep_file.py sleep.bin band-local-1 > sleep.json
 }
 ```
 
-手机把 options 拼成编号文本显示；这不是手环按钮。真正用户选择先在手机 UI 完成。
+手机把 options 拼成编号文本显示；RPK 快应用则可以在支持的手环运行时显示并点击。
+真正能否在你的 3.1.175 真机显示，仍需一次安装验收。
 bot 在同一睡眠 start 的多个修订中选择更新内容，勿将同一晚重复统计；此 API 原型
 保存全部事件，不自动合并修订。轮询不提供多 worker 租约，多 Agent 部署需补 lease。
 模型调用的密钥、模型名和现有 bot 接入地址没有提供，本项目不虚构 Grok SDK 调用。
-如果已有 webhook runner，让它取得 pending 后调用原 bot，再按 Result schema 回写。
-推送式 webhook 后续应加 HMAC(timestamp + '.' + raw_body)、重试和 event_id 去重。
+`agent_client.py` 会取得 pending、以 HMAC(timestamp + '.' + raw_body) 调用你的
+Webhook，再按 Result schema 回写；`webhook_example.py` 可作为服务端校验模板。
+失败事件保留在 pending 队列中，下一次调度自动重试，event_id 保持幂等。
+
+单次运行 Agent 轮询器：
+
+```powershell
+$env:BAND_LOCAL_API = 'http://127.0.0.1:8000'
+$env:AGENT_TOKEN = '至少 24 个字符的随机值'
+$env:BAND_WEBHOOK_URL = 'https://你的域名/analyse'
+$env:BAND_WEBHOOK_SECRET = '另一个至少 24 个字符的随机值'
+python run_agent.py
+```
 
 ## 能力边界
 

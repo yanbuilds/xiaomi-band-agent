@@ -10,7 +10,7 @@ import sqlite3
 import time
 from contextlib import closing
 from typing import Literal
-from fastapi import FastAPI, Header, HTTPException
+from fastapi import FastAPI, Header, HTTPException, Query
 from pydantic import BaseModel, Field, model_validator
 
 app = FastAPI(title='Band local bridge MVP')
@@ -96,10 +96,12 @@ def ingest(event: Event, authorization: str | None = Header(default=None)):
 
 
 @app.get('/v1/agent/pending')
-def pending(authorization: str | None = Header(default=None)):
+def pending(authorization: str | None = Header(default=None),
+            limit: int = Query(default=20, ge=1, le=20)):
     authorize('AGENT', authorization)
     with closing(db()) as c:
-        return [json.loads(r[0]) for r in c.execute('SELECT body FROM events WHERE result IS NULL ORDER BY rowid LIMIT 20')]
+        return [json.loads(r[0]) for r in c.execute(
+            'SELECT body FROM events WHERE result IS NULL ORDER BY rowid LIMIT ?', (limit,))]
 
 
 @app.post('/v1/agent/results/{event_id}')

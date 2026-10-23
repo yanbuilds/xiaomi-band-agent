@@ -7,6 +7,8 @@ import unittest
 import zlib
 from pathlib import Path
 from fastapi.testclient import TestClient
+import httpx
+from agent_client import AgentConfig, AgentRunner, signed_headers, verify_signature
 from sleep_file import parse_sleep
 
 
@@ -51,6 +53,52 @@ class Tests(unittest.TestCase):
                 self.assertEqual(len(c.get('/v1/notifications',headers=phone).json()),1)
                 self.assertEqual(c.post('/v1/notifications/'+eid+'/submitted',headers=phone).status_code,200)
                 self.assertEqual(c.get('/v1/notifications',headers=phone).json(),[])
+
+    def test_webhook_signature_rejects_replay(self):
+        body = b'{"event_id":"abc"}'
+        headers = signed_headers(body, 's' * 32, 1000)
+        self.assertTrue(verify_signature(body, 's' * 32, headers['X-Band-Agent-Timestamp'], headers['X-Band-Agent-Signature'], now=1000))
+        self.assertFalse(verify_signature(body, 's' * 32, headers['X-Band-Agent-Timestamp'], headers['X-Band-Agent-Signature'], now=1401))
+        self.assertFalse(verify_signature(body, 'x' * 32, headers['X-Band-Agent-Timestamp'], headers['X-Band-Agent-Signature'], now=1000))
+
+    def test_agent_runner_webhook_roundtrip(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            os.environ.update(PHONE_TOKEN='p'*32, AGENT_TOKEN='a'*32)
+            api = importlib.import_module('api'); api.DB = str(Path(tmp)/'test.db')
+            with TestClient(api.app) as server:
+                event = parse_sleep(fixture(), 'band-local-1')
+                phone = {'Authorization': 'Bearer ' + 'p'*32}
+                self.assertEqual(server.post('/v1/sleep', json=event, headers=phone).status_code, 200)
+
+                def handler(request: httpx.Request) -> httpx.Response:
+                    self.assertTrue(verify_signature(request.content, 'w'*32,
+                                                     request.headers['X-Band-Agent-Timestamp'],
+                                                     request.headers['X-Band-Agent-Signature']))
+                    return httpx.Response(200, json={'title':'睡眠回顾','text':'已分析','options':[],
+                                                     'expires_at': int(time.time()) + 600})
+
+                transport = httpx.MockTransport(handler)
+                client = httpx.Client(transport=transport)
+                # Route local API calls to the in-process FastAPI test server.
+                original_get, original_post = client.get, client.post
+                def local_get(url, **kwargs):
+                    if url.endswith('/v1/agent/pending'):
+                        response = server.get('/v1/agent/pending', headers=kwargs.get('headers'))
+                        return httpx.Response(response.status_code, json=response.json(),
+                                              request=httpx.Request('GET', url))
+                    return original_get(url, **kwargs)
+                def local_post(url, **kwargs):
+                    if '/v1/agent/results/' in url:
+                        event_id = url.rsplit('/', 1)[-1]
+                        response = server.post('/v1/agent/results/' + event_id,
+                                               headers=kwargs.get('headers'), json=kwargs.get('json'))
+                        return httpx.Response(response.status_code, json=response.json(),
+                                              request=httpx.Request('POST', url))
+                    return original_post(url, **kwargs)
+                client.get, client.post = local_get, local_post
+                runner = AgentRunner(AgentConfig('http://127.0.0.1:8000', 'a'*32,
+                                                 'https://agent.example.test/webhook', 'w'*32), client)
+                self.assertEqual(runner.run_once(), {'seen': 1, 'completed': 1, 'failed': 0})
 
 
 if __name__ == '__main__': unittest.main()

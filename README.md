@@ -14,6 +14,9 @@ Grok bot → 选项/文本 → Android → 手环快应用/通知
 ## 当前内容
 
 - `outputs/band9pro-mvp/`：睡眠 stages v2 离线解析器、FastAPI API、测试和 Gadgetbridge 适配骨架。
+- `outputs/band9pro-mvp/agent_client.py`：带 HMAC 防重放的 Agent/Webhook 自动轮询器。
+- `outputs/band9pro-mvp/webhook_example.py`：可直接改造为 Grok bot 的 HTTPS webhook。
+- `android-bridge/.../PhoneSyncCoordinator.kt`：Android Worker 的同步与通知编排边界。
 - `docs/ROADMAP.md`：产品与技术里程碑。
 - `docs/VOICE-RESEARCH.md`：3.1.175 语音链路研究计划。
 
@@ -26,7 +29,8 @@ $env:PYTHONPATH = (Resolve-Path outputs/band9pro-mvp).Path
 .\.venv\Scripts\python -m unittest discover -s outputs/band9pro-mvp -v
 ```
 
-Android 集成仍需放入 Gadgetbridge fork 编译；Python 原型不负责直接连接手环。
+Android 集成仍需放入 Gadgetbridge fork 编译；Python 原型不负责直接连接手环，
+而是为 Android Worker 提供安全 API 和 Agent 适配层。
 
 ## 许可与研究材料
 
