@@ -3,6 +3,7 @@
 ## M0：建立真实链路
 
 - [ ] 在 Android 上确认 Band 9 Pro 3.1.175 的型号、地址和认证方式。
+- [ ] 评估 `HyperionD/minstall` 的 Android RFCOMM/SPP 连接与 RPK 安装路径；先做认证/设备信息只读验收，再启用 RPK 安装。
 - [ ] 用 Gadgetbridge 完成一次今日/历史文件同步（需要解锁手机和真实设备验收）。
 - [ ] 保存一份脱敏睡眠原始文件，验证 CRC32、文件 ID 和阶段映射。
 - [x] 手机上传事件到本项目 API，Agent/Webhook 回写结构化结果（本地测试完成；真实 bot 地址待配置）。
