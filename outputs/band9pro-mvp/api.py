@@ -12,6 +12,7 @@ from contextlib import closing
 from typing import Literal
 from fastapi import FastAPI, Header, HTTPException, Query
 from pydantic import BaseModel, Field, model_validator
+from state_engine import infer_state, possible_oversleep
 
 app = FastAPI(title='Band local bridge MVP')
 DB = os.environ.get('BAND_DB', 'band.sqlite3')
@@ -97,6 +98,15 @@ class HealthEvent(BaseModel):
     samples: list[HealthSample] = Field(min_length=1, max_length=20000)
 
 
+class StateEvaluationRequest(BaseModel):
+    now: int = Field(gt=0)
+    samples: list[HealthSample] = Field(default_factory=list, max_length=20000)
+    sleep: dict | None = None
+    latest_wake_at: int | None = Field(default=None, gt=0)
+    workday: bool = True
+    resting_heart_rate: float | None = Field(default=None, ge=30, le=200)
+
+
 class Option(BaseModel):
     id: str = Field(min_length=1, max_length=32)
     text: str = Field(min_length=1, max_length=60)
@@ -155,6 +165,17 @@ def health_pending(authorization: str | None = Header(default=None),
     with closing(db()) as c:
         return [json.loads(r[0]) for r in c.execute(
             'SELECT body FROM health_events ORDER BY rowid LIMIT ?', (limit,))]
+
+
+@app.post('/v1/state/evaluate')
+def evaluate_state(request: StateEvaluationRequest, authorization: str | None = Header(default=None)):
+    authorize('PHONE', authorization)
+    samples = [sample.model_dump() for sample in request.samples]
+    state = infer_state(now=request.now, samples=samples, sleep=request.sleep,
+                        resting_heart_rate=request.resting_heart_rate)
+    alert = possible_oversleep(now=request.now, latest_wake_at=request.latest_wake_at,
+                               state=state, workday=request.workday)
+    return {'state': state.as_dict(), 'alert': alert}
 
 
 @app.post('/v1/agent/results/{event_id}')

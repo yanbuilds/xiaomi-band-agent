@@ -13,6 +13,12 @@ Gadgetbridge 适配源。`PhoneSyncCoordinator.kt` 由实际 Android 应用提�
 实现后即可放进 WorkManager；它不会创建第二条蓝牙连接。Grok bot 通过通用 API
 接入，无须把蓝牙密钥交给模型。
 
+`state_engine.py` 是手机本地的确定性状态层：根据睡眠、步数和心率输出
+`SLEEPING`、`AWAKE_IN_BED`、`STATIONARY`、`WALKING` 或 `EXERCISING` 及置信度，
+并可生成 `possible_oversleep` 事件。它不能直接识别“躺着/坐着”，只报告带证据的
+概率推断。`POST /v1/state/evaluate` 可在不依赖 Grok 的情况下运行这些规则；Grok
+收到结构化事件后负责措辞和选项生成。
+
 外部项目的职责划分见 [`docs/RESEARCH-TRIAGE.md`](../../docs/RESEARCH-TRIAGE.md)：
 `miband-mcp` 适合作为 Agent/SQLite 同步层参考，BEST1503 SDK 适合作为固件刷写
 研究底座，Gadgetbridge 仍是 Android 蓝牙和 Xiaomi protobuf 的底座。

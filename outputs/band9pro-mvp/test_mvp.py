@@ -10,6 +10,7 @@ from fastapi.testclient import TestClient
 import httpx
 from agent_client import AgentConfig, AgentRunner, signed_headers, verify_signature
 from sleep_file import parse_sleep
+from state_engine import infer_state, possible_oversleep
 
 
 def fixture():
@@ -23,6 +24,35 @@ def fixture():
 
 
 class Tests(unittest.TestCase):
+    def test_state_engine_and_oversleep(self):
+        now = 1792598400
+        sleep_end = now - 35 * 60
+        samples = [
+            {'timestamp': sleep_end + 10 * 60, 'metric': 'heart_rate', 'value': 66, 'unit': 'bpm'},
+            {'timestamp': sleep_end + 30 * 60, 'metric': 'steps', 'value': 8, 'unit': 'count'},
+        ]
+        state = infer_state(now=now, samples=samples, sleep={'start': now - 8*3600, 'end': sleep_end})
+        self.assertEqual(state.state, 'AWAKE_IN_BED')
+        alert = possible_oversleep(now=now, latest_wake_at=now - 40*60, state=state)
+        self.assertEqual(alert['event'], 'possible_oversleep')
+        self.assertEqual(alert['recommended_options'], ['awake', 'snooze_10m', 'day_off'])
+
+    def test_state_engine_exercise_and_api(self):
+        now = 1792598400
+        samples = [
+            {'timestamp': now - 5*60, 'metric': 'steps', 'value': 160, 'unit': 'count'},
+            {'timestamp': now - 4*60, 'metric': 'heart_rate', 'value': 132, 'unit': 'bpm'},
+        ]
+        self.assertEqual(infer_state(now=now, samples=samples).state, 'EXERCISING')
+        with tempfile.TemporaryDirectory() as tmp:
+            os.environ.update(PHONE_TOKEN='p'*32, AGENT_TOKEN='a'*32)
+            api = importlib.import_module('api'); api.DB = str(Path(tmp)/'state.db')
+            with TestClient(api.app) as c:
+                response = c.post('/v1/state/evaluate', headers={'Authorization': 'Bearer '+'p'*32}, json={
+                    'now': now, 'samples': samples, 'sleep': None,
+                })
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response.json()['state']['state'], 'EXERCISING')
     def test_parser(self):
         e = parse_sleep(fixture(), 'band-local-1')
         self.assertEqual([x['stage'] for x in e['sleep']['stages']], ['light','deep','rem'])
