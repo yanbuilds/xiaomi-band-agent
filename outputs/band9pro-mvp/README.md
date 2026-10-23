@@ -142,7 +142,9 @@ python sleep_file.py sleep.bin band-local-1 > sleep.json
 | 请求 | 凭据 | 用途 |
 |---|---|---|
 | POST /v1/sleep | PHONE_TOKEN | 提交 sleep_file.py 输出；相同 event_id 幂等 |
+| POST /v1/health | PHONE_TOKEN | 提交已解析的心率/步数/血氧样本；相同 event_id 幂等 |
 | GET /v1/agent/pending | AGENT_TOKEN | bot 拉取未分析事件，最多 20 条 |
+| GET /v1/agent/health/pending | AGENT_TOKEN | bot 拉取标准化健康样本 |
 | POST /v1/agent/results/{event_id} | AGENT_TOKEN | 提交结构化分析/选项 |
 | GET /v1/notifications | PHONE_TOKEN | 手机获取未提交且未过期通知 |
 | POST /v1/notifications/{id}/submitted | PHONE_TOKEN | 标记已提交本地发送队列 |
