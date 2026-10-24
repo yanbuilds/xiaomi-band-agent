@@ -154,6 +154,8 @@ python sleep_file.py sleep.bin band-local-1 > sleep.json
 | POST /v1/agent/results/{event_id} | AGENT_TOKEN | 提交结构化分析/选项 |
 | GET /v1/notifications | PHONE_TOKEN | 手机获取未提交且未过期通知 |
 | POST /v1/notifications/{id}/submitted | PHONE_TOKEN | 标记已提交本地发送队列 |
+| POST /v1/interactions | PHONE_TOKEN | 保存手环点击/语音请求 |
+| GET /v1/agent/interactions | AGENT_TOKEN | Grok 拉取手环交互结果 |
 
 认证头：Authorization: Bearer <对应令牌>。不接收或保存手环 auth key。
 结果示例（expires_at 必须改为当前时间之后、24 小时以内）：

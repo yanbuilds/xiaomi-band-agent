@@ -22,6 +22,7 @@ def db():
     c = sqlite3.connect(DB, timeout=15)
     c.execute('CREATE TABLE IF NOT EXISTS events (id TEXT PRIMARY KEY, body TEXT NOT NULL, result TEXT, expires INTEGER, delivered INTEGER DEFAULT 0)')
     c.execute('CREATE TABLE IF NOT EXISTS health_events (id TEXT PRIMARY KEY, body TEXT NOT NULL)')
+    c.execute('CREATE TABLE IF NOT EXISTS interactions (id TEXT PRIMARY KEY, body TEXT NOT NULL, created INTEGER NOT NULL)')
     c.commit()
     return c
 
@@ -119,6 +120,21 @@ class Result(BaseModel):
     expires_at: int
 
 
+class Interaction(BaseModel):
+    request_id: str = Field(min_length=1, max_length=128)
+    kind: Literal['option_selected', 'voice_request']
+    option_id: str | None = Field(default=None, max_length=32)
+    text: str | None = Field(default=None, max_length=2000)
+
+    @model_validator(mode='after')
+    def validate_payload(self):
+        if self.kind == 'option_selected' and not self.option_id:
+            raise ValueError('option_id required for option_selected')
+        if self.kind == 'voice_request' and self.option_id:
+            raise ValueError('option_id not allowed for voice_request')
+        return self
+
+
 @app.post('/v1/sleep')
 def ingest(event: Event, authorization: str | None = Header(default=None)):
     authorize('PHONE', authorization)
@@ -214,3 +230,24 @@ def submitted(event_id: str, authorization: str | None = Header(default=None)):
         if not cur.rowcount:
             raise HTTPException(404, 'notification not found')
     return {'status': 'submitted_to_local_queue'}
+
+
+@app.post('/v1/interactions')
+def interaction(request: Interaction, authorization: str | None = Header(default=None)):
+    """Persist a watch click/voice request for the Agent conversation loop."""
+    authorize('PHONE', authorization)
+    body = json.dumps(request.model_dump(), sort_keys=True, ensure_ascii=False)
+    interaction_id = hmac.new(b'band-interaction-v1', body.encode(), 'sha256').hexdigest()
+    with closing(db()) as c, c:
+        c.execute('INSERT OR IGNORE INTO interactions(id,body,created) VALUES (?,?,?)',
+                  (interaction_id, body, int(time.time())))
+    return {'interaction_id': interaction_id, 'stored': True}
+
+
+@app.get('/v1/agent/interactions')
+def pending_interactions(authorization: str | None = Header(default=None),
+                         limit: int = Query(default=20, ge=1, le=100)):
+    authorize('AGENT', authorization)
+    with closing(db()) as c:
+        return [dict(interaction_id=r[0], **json.loads(r[1]), created=r[2])
+                for r in c.execute('SELECT id,body,created FROM interactions ORDER BY created LIMIT ?', (limit,))]
