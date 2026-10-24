@@ -189,6 +189,18 @@ $env:BAND_WEBHOOK_SECRET = '另一个至少 24 个字符的随机值'
 python run_agent.py
 ```
 
+手机侧通知桥接器负责把 Agent 结果交给 Gadgetbridge。它只调用 Android
+`ACTION_SEND_APP_MESSAGE` 广播；Gadgetbridge 仍是唯一的蓝牙连接拥有者：
+
+```powershell
+$env:PHONE_TOKEN = '至少 24 个字符的随机值'
+python phone_bridge.py --serial 192.168.10.189:37517 --once
+```
+
+确认测试成功后去掉 `--once`，它会按间隔轮询并在广播成功后标记通知已提交。
+广播桥需要使用带 Xiaomi RPK/interconnect 支持的 Gadgetbridge 构建；普通上游
+构建会安全失败并保留通知，便于稍后重试。
+
 ## 能力边界
 
 - 可规划通知文字 + 按手环自身设置震动；无法保证越过勿扰、睡眠模式和系统限流。
