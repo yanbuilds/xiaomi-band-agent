@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shlex
 import subprocess
 import time
 from typing import Any, Sequence
@@ -37,7 +38,7 @@ def send(adb: str, serial: str, package: str, item: dict[str, Any]) -> None:
     message = _message(item)
     command = [adb, "-s", serial, "shell", "am", "broadcast", "-a", ACTION,
                "-p", GADGETBRIDGE, "--es", "package", package,
-               "--es", "message", message]
+               "--es", "message", shlex.quote(message)]
     completed = subprocess.run(command, capture_output=True, text=True, check=False)
     if completed.returncode:
         raise RuntimeError(completed.stderr.strip() or "adb broadcast failed")

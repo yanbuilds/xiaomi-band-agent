@@ -197,6 +197,13 @@ $env:PHONE_TOKEN = '至少 24 个字符的随机值'
 python phone_bridge.py --serial 192.168.10.189:37517 --once
 ```
 
+手动发送一条 RPK 测试消息：
+
+```powershell
+python ..\..\tools\send_band_question.py --serial 192.168.10.189:37517 `
+  --text '是否收到测试消息？' --option '收到' --option '重试'
+```
+
 确认测试成功后去掉 `--once`，它会按间隔轮询并在广播成功后标记通知已提交。
 广播桥需要使用带 Xiaomi RPK/interconnect 支持的 Gadgetbridge 构建；普通上游
 构建会安全失败并保留通知，便于稍后重试。

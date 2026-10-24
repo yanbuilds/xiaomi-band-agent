@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shlex
 import subprocess
 import time
 from typing import Sequence
@@ -30,9 +31,9 @@ def build_message(args: argparse.Namespace) -> str:
     )
 
 
-def send(adb: str, package: str, message: str, *, dry_run: bool) -> int:
-    command = [adb, "shell", "am", "broadcast", "-a", ACTION, "-p", GADGETBRIDGE,
-               "--es", "package", package, "--es", "message", message]
+def send(adb: str, serial: str | None, package: str, message: str, *, dry_run: bool) -> int:
+    command = [adb] + (["-s", serial] if serial else []) + ["shell", "am", "broadcast", "-a", ACTION, "-p", GADGETBRIDGE,
+               "--es", "package", package, "--es", "message", shlex.quote(message)]
     if dry_run:
         print(json.dumps(command, ensure_ascii=False))
         return 0
@@ -48,13 +49,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--option", action="append", required=True)
     parser.add_argument("--ttl", type=int, default=300)
     parser.add_argument("--adb", default="adb")
+    parser.add_argument("--serial", default=None, help="ADB device serial, for example 192.168.10.189:37517")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args(argv)
     try:
         message = build_message(args)
     except ValueError as exc:
         parser.error(str(exc))
-    return send(args.adb, args.package, message, dry_run=args.dry_run)
+    return send(args.adb, args.serial, args.package, message, dry_run=args.dry_run)
 
 
 if __name__ == "__main__":
